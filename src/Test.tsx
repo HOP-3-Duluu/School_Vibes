@@ -1,6 +1,6 @@
 import {SafeAreaView, Text} from 'react-native';
 import React from 'react';
-import {Stack} from './components';
+import {Font, Stack} from './components';
 
 const Test = () => {
   return (
@@ -12,10 +12,18 @@ const Test = () => {
           justifyContent = 'flex-start',
           style, */}
       <Stack spacing={10}>
-        <Text>Child component 1</Text>
-        <Text>Child component 2</Text>
-        <Text>Child component 3</Text>
+        <Text>Stack component 1</Text>
+        <Text>Stack component 2</Text>
+        <Text>Stack component 3</Text>
       </Stack>
+      {/*
+        default
+        fontWeight = 'normal'
+        fontSize = 14
+      */}
+      <Font fontWeight="bold" fontSize={16}>
+        Font component 1
+      </Font>
     </SafeAreaView>
   );
 };
