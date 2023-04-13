@@ -1,6 +1,6 @@
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import React from 'react';
-import {Font, Stack} from './components';
+import {Font, Padding, Stack} from './components';
 
 const Test = () => {
   return (
@@ -24,6 +24,12 @@ const Test = () => {
       <Font fontWeight="bold" fontSize={16}>
         Font component 1
       </Font>
+      {/*
+          zaava; vertical horizontal gej bicne
+        */}
+      <Padding size={26} vertical horizontal>
+        <Text>This text has padding of 16 on all sides.</Text>
+      </Padding>
     </SafeAreaView>
   );
 };
