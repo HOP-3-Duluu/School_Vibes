@@ -1,6 +1,7 @@
-import {SafeAreaView, Text, View} from 'react-native';
 import React from 'react';
-import {Font, Padding, Stack} from './components';
+import {Calendar, Font, Padding, Stack} from './components';
+
+import {Text, SafeAreaView} from 'react-native';
 
 const Test = () => {
   return (
@@ -30,6 +31,7 @@ const Test = () => {
       <Padding size={26} vertical horizontal>
         <Text>This text has padding of 16 on all sides.</Text>
       </Padding>
+      <Calendar />
     </SafeAreaView>
   );
 };
