@@ -23,7 +23,7 @@ const Test = () => {
         fontSize = 14
       */}
       <Font fontWeight="bold" fontSize={16}>
-        Font component 1
+        Font component 1s
       </Font>
       {/*
           zaava; vertical horizontal gej bicne
