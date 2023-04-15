@@ -1,7 +1,8 @@
 import React from 'react';
-import {Calendar, Font, Padding, Stack } from './components';
+import {Calendar, Font, Padding, Stack} from './components';
 
 import {Text, SafeAreaView} from 'react-native';
+import FontSize from './constants/FontSize';
 
 const Test = () => {
   return (
@@ -22,8 +23,8 @@ const Test = () => {
         fontWeight = 'normal'
         fontSize = 14
       */}
-      <Font fontWeight="bold" fontSize={16}>
-        Font component 1s
+      <Font fontWeight="bold" fontSize={FontSize.medium}>
+        Font component 1
       </Font>
       {/*
           zaava; vertical horizontal gej bicne

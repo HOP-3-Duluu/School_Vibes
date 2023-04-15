@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet} from 'react-native';
-
+import FontSize from '../../constants/FontSize';
 interface FontProps {
   children: React.ReactNode;
   fontWeight?:
@@ -21,7 +21,7 @@ interface FontProps {
 export const Font = ({
   children,
   fontWeight = 'normal',
-  fontSize = 14,
+  fontSize = FontSize.small,
 }: FontProps) => {
   const textStyle = [styles.text, {fontWeight, fontSize}];
 
@@ -30,7 +30,7 @@ export const Font = ({
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 14,
+    fontSize: FontSize.small,
     fontWeight: 'normal',
   },
 });
