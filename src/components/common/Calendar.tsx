@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
+import Colors from '../../constants/Colors';
 
 export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(moment());
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.background,
     borderRadius: 20,
     margin: 4,
   },
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   calendarDaySelected: {
-    backgroundColor: '#4287f5',
+    backgroundColor: Colors.primary,
   },
   calendarDayDisabled: {
     opacity: 0.3,
