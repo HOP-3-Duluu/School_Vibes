@@ -1,5 +1,5 @@
 import React from 'react';
-import {Calendar, Font, Padding, Stack} from './components';
+import {Calendar, Font, Padding, Stack } from './components';
 
 import {Text, SafeAreaView} from 'react-native';
 
