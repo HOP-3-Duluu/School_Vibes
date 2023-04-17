@@ -1,8 +1,8 @@
 import React from 'react';
 import {Calendar, Font, Padding, Stack} from './components';
-
 import {Text, SafeAreaView} from 'react-native';
 import FontSize from './constants/FontSize';
+import {Accordion} from './components';
 
 const Test = () => {
   return (
@@ -33,6 +33,9 @@ const Test = () => {
         <Text>This text has padding of 16 on all sides.</Text>
       </Padding>
       <Calendar />
+      <Accordion title="hello">
+        <Text>hello this is boduy</Text>
+      </Accordion>
     </SafeAreaView>
   );
 };
