@@ -59,10 +59,9 @@ export const Calendar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: Colors.light,
   },
   title: {
     fontSize: 24,
@@ -91,6 +90,7 @@ const styles = StyleSheet.create({
   },
   calendarDayToday: {
     fontWeight: 'bold',
+    color: Colors.whiteText,
   },
   calendarDaySelected: {
     backgroundColor: Colors.primary,
