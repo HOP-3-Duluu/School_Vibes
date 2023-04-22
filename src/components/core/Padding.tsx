@@ -3,27 +3,36 @@ import {View, StyleProp, ViewStyle} from 'react-native';
 
 interface PaddingProps {
   children: ReactNode;
-  size?: number;
-  horizontal?: boolean;
-  vertical?: boolean;
+  all?: number;
+  right?: number;
+  left?: number;
+  Top?: number;
+  bottom?: number;
+  horizontal?: number;
+  vertical?: number;
   style?: StyleProp<ViewStyle>;
 }
 
 export const Padding = ({
   children,
-  size,
-  horizontal = false,
-  vertical = false,
+  all,
+  left,
+  right,
+  Top,
+  bottom,
   style,
+  horizontal,
+  vertical,
 }: PaddingProps) => {
-  const paddingStyle = [
+  const marginStyle = [
     {
-      padding: size,
-      paddingHorizontal: horizontal ? size : 0,
-      paddingVertical: vertical ? size : 0,
+      marginLeft: left || horizontal || all || 0,
+      marginRight: right || horizontal || all || 0,
+      marginTop: Top || vertical || all || 0,
+      marginBottom: bottom || vertical || all || 0,
     },
     style,
   ];
 
-  return <View style={paddingStyle}>{children}</View>;
+  return <View style={marginStyle}>{children}</View>;
 };

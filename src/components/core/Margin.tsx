@@ -3,33 +3,33 @@ import {View, StyleProp, ViewStyle} from 'react-native';
 
 interface MarginProps {
   children: ReactNode;
-  All?: number;
-  Right?: number;
-  Left?: number;
-  Top?: number;
-  Bottom?: number;
-  Horizontal?: number;
-  Vertical?: number;
+  all?: number;
+  right?: number;
+  left?: number;
+  top?: number;
+  bottom?: number;
+  horizontal?: number;
+  vertical?: number;
   style?: StyleProp<ViewStyle>;
 }
 
 export const Margin = ({
   children,
-  All,
-  Left,
-  Right,
-  Top,
-  Bottom,
+  all,
+  left,
+  right,
+  top,
+  bottom,
   style,
-  Horizontal,
-  Vertical,
+  horizontal,
+  vertical,
 }: MarginProps) => {
   const MarginStyle = [
     {
-      marginLeft: Left || Horizontal || All || 0,
-      marginRight: Right || Horizontal || All || 0,
-      marginTop: Top || Vertical || All || 0,
-      marginBottom: Bottom || Vertical || All || 0,
+      marginLeft: left || horizontal || all || 0,
+      marginRight: right || horizontal || all || 0,
+      marginTop: top || vertical || all || 0,
+      marginBottom: bottom || vertical || all || 0,
     },
     style,
   ];
