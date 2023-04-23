@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
   calendarContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   calendarDay: {
     width: 40,
