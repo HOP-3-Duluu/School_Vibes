@@ -19,33 +19,37 @@ const CreateAlert = ({status = 'information'}: StatusProp) => {
   const colors = [['#D1E0D6', '#61B267']];
 
   return (
-<AlertNotificationRoot>
-  <View>
+    <View>
+      <AlertNotificationRoot>
+        <View>
 
-    <Button
-      title={'dialog box'}
-      onPress={() =>
-        Dialog.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Success',
-          textBody: 'Congrats! this is dialog box success',
-          button: 'close',
-        })
-      }
-    />
+          <Button
+            title={'dialog box'}
+            onPress={() =>
+              Dialog.show({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Success',
+                textBody: 'Congrats! this is dialog box success',
+                button: 'close',
+              })
+            }
+          />
 
-    <Button
-      title={'toast notification'}
-      onPress={() =>
-        Toast.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Success',
-          textBody: 'Congrats! this is toast notification success',
-        })
-      }
-    />
-  </View>
-</AlertNotificationRoot>
+          <Button
+            title={'toast notification'}
+            onPress={() =>
+              Toast.show({
+                type: ALERT_TYPE.SUCCESS,
+                title: 'Success',
+                textBody: 'Congrats! this is toast notification success',
+              })
+            }
+          />
+        </View>
+      </AlertNotificationRoot>
+    
+      <Text>AAA</Text>
+    </View>
   )
 };
 
