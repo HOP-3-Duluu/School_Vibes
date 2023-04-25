@@ -1,5 +1,5 @@
 import React from 'react';
-import {Calendar, Font, Margin, Padding, Stack,Button} from './components';
+import {Calendar, Font, Margin, Padding, Stack} from './components';
 import {Text, SafeAreaView} from 'react-native';
 import FontSize from './constants/FontSize';
 import {Accordion} from './components';
@@ -39,43 +39,7 @@ const Test = () => {
         <Accordion title="hello">
           <Text>hello this is boduy</Text>
         </Accordion>
-      </Margin><View
-        style={{height: 250, display: 'flex',width:'100%', alignItems: 'center', justifyContent: 'space-around'}}>
-        <Button
-          bgColor={'black'}
-          bRadius={'5px'}
-          title={'Add'}
-          color={'#fff'}
-          type={'add'}
-          size={"big"}
-        />
-        <Button
-          bgColor={'#fff'}
-          bRadius={'5px'}
-          title={'Add'}
-          color={'black'}
-          type={'left'}
-          size={'big'}
-          borderColor={'1px solid black'}
-        />
-        <Button
-          bgColor={'#fff'}
-          bRadius={'40px'}
-          color={'black'}
-          type={'right'}
-          size={'header'}
-          borderColor={'1px solid black'}
-        />
-        <Button
-          bgColor={'#fff'}
-          bRadius={'5px'}
-          title={'Add'}
-          color={'black'}
-          size={'small'}
-          type={''}
-          borderColor={'1px solid black'}
-        />
-      </View>
+      </Margin>
     </SafeAreaView>
   );
 };
