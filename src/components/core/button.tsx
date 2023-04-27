@@ -1,98 +1,63 @@
-import {StyleSheet, Text, View} from 'react-native';
-import styled from 'styled-components';
-import {Plus, BulletL, BulletR} from '../../assets';
+import React, { ReactNode } from 'react';
+import { TouchableOpacity, Text, StyleSheet, View, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import Colors from '../../constants/Colors';
 
-const Container = styled.View`
-  width: ${props => (props?.width ? props?.width : '')};
-  height: ${props => (props?.height ? props?.height : '')};
-  background-color: ${props => (props?.bgColor ? props?.bgColor : '#fff')};
-  border-radius: ${props => (props?.bRadius ? props?.bRadius : '0px')};
-  border: ${props => (props?.borderColor ? props?.borderColor : '')};
-  padding-left: 20px;
-  padding-right: 20px;
-  display: flex;
-  justify-content: center;
-`;
-const Txt = styled.Text`
-  color: ${props => (props?.color ? props?.color : '#fff')};
-`;
-export const Button = ({
-  type,
-  width,
-  height,
-  bgColor,
-  borderColor,
-  bRadius,
-  title,
-  color,
-  size,
-}: {
-  type: string;
-  width: string;
-  height: string;
-  bgColor: string;
-  borderColor: string;
-  bRadius: string;
-  title: string;
-  color: string;
-  size: string;
+
+interface Props {
+  onPress: () => void;
+  icon?: React.ReactNode;
+  buttonStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  iconStyle?: StyleProp<ViewStyle>;
+  children: ReactNode;
+  variant?: 'contained' | 'outlined'; 
+
+}
+
+export const Button: React.FC<Props> = ({
+  onPress,
+  children,
+  icon,
+  buttonStyle,
+  textStyle,
+  iconStyle,
+  variant
 }) => {
+  const textColor = variant === 'contained' ? '#fff' : Colors.primary;
+  const borderColor = variant === 'outlined' ? Colors.primary : 'transparent';
+  const backgroundColor = variant === 'contained' ? Colors.primary : 'transparent';
+
+  
   return (
-    <View>
-      <Container
-        bgColor={bgColor}
-        bRadius={bRadius}
-        width={size == "header" ? "40px" : size == "small" ? "150px" :"340px" }
-        height={size == "header" ? "40px" : size == "small" ? "47px" :"50px" }
-        borderColor={borderColor}>
-        {type == 'add' ? (
-          <View style={styles.flex}>
-            <View style={styles.icon}>
-              <Plus prop={color} />
-            </View>
-            <View style={styles.icon}>
-              <Txt color={color}>{title}</Txt>
-            </View>
-          </View>
-        ) : type == 'left' ? (
-          <View style={styles.flex}>
-            <View style={styles.icon}>
-              <Txt color={color}>{title}</Txt>
-            </View>
-            <View style={styles.icon}>
-              <BulletL prop={color} />
-            </View>
-          </View>
-        ) : type == 'right' ? (
-          <View style={styles.flex}>
-            <View style={styles.icon}>
-              <BulletR prop={color} />
-            </View>
-            <View style={styles.icon}>
-              <Txt color={color}>{title}</Txt>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.flex}>
-            <View style={styles.icon}>
-              <Txt color={color}>{title}</Txt>
-            </View>
-          </View>
-        )}
-      </Container>
-    </View>
+    <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle, {
+      backgroundColor: backgroundColor,
+      borderColor: borderColor
+    }]}>
+      <View style={styles.container}>
+      {icon}
+        <Text style={[styles.text, textStyle, {color: textColor}]}>{children}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
+
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  button: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    alignSelf: 'stretch',
+    borderWidth: 1
   },
-  icon: {
-    padding: 5,
-    color: '#fff',
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginLeft: 10,
   },
 });
+

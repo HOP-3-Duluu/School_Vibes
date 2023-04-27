@@ -1,3 +1,3 @@
-export * from "./plus"
-export * from "./bulletLeft"
-export * from "./bulletRight"
+export * from "./BulletLeft"
+export * from "./BulletRight"
+export * from "./Plus"

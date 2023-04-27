@@ -1,10 +1,15 @@
 import React from 'react';
-import {Calendar, Font, Margin, Padding, Stack} from './components';
+import {Button, Calendar, Font, Margin, Padding, Stack} from './components';
 import {Text, SafeAreaView} from 'react-native';
 import FontSize from './constants/FontSize';
 import {Accordion} from './components';
+import {Plus, BulletR} from "./assets"
+import Colors from './constants/Colors';
 
 const Test = () => {
+  const handlePress = () => {
+    // Handle button press
+  };
   return (
     <SafeAreaView>
       {/* default
@@ -36,9 +41,17 @@ const Test = () => {
         <Calendar />
       </Margin>
       <Margin all={10}>
-        <Accordion title="hello">
-          <Text>hello this is boduy</Text>
-        </Accordion>
+        <Stack width="100%" spacing={10}>
+          <Accordion title="hello">
+            <Text>hello this is boduy</Text>
+          </Accordion>
+          <Button variant="contained" onPress={handlePress} icon={<Plus fill={Colors.background}/>} >
+            contained
+          </Button>
+          <Button variant="outlined" onPress={handlePress} icon={<Plus fill={Colors.primary}/>}>
+            outlined
+          </Button>
+        </Stack>
       </Margin>
     </SafeAreaView>
   );
