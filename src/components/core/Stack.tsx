@@ -8,6 +8,7 @@ type StackProps = {
   alignItems?: ViewStyle['alignItems'];
   justifyContent?: ViewStyle['justifyContent'];
   style?: ViewStyle;
+  width?: string
 };
 
 export const Stack = ({
@@ -17,6 +18,7 @@ export const Stack = ({
   alignItems = 'flex-start',
   justifyContent = 'flex-start',
   style,
+  width
 }: StackProps) => {
   const containerStyle = [
     styles.container,
@@ -29,7 +31,9 @@ export const Stack = ({
   return (
     <View style={containerStyle}>
       {React.Children.map(children, (child, index) => (
-        <View style={index >= 0 && childContainerStyle}>{child}</View>
+        <View style={(index >= 0 && {...childContainerStyle, width})}>
+          {child}
+        </View>
       ))}
     </View>
   );

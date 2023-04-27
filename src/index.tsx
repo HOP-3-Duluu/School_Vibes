@@ -5,7 +5,7 @@ import Test from './Test';
 const App = () => {
   return (
     <SafeAreaView>
-      <Test />
+      <Test/>
     </SafeAreaView>
   );
 };
