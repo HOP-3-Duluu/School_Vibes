@@ -1,17 +1,22 @@
-import React, { ReactNode } from 'react';
-import { TouchableOpacity, Text, StyleSheet, View, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import React, {ReactNode} from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  View,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 import Colors from '../../constants/Colors';
-
 
 interface Props {
   onPress: () => void;
   icon?: React.ReactNode;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  iconStyle?: StyleProp<ViewStyle>;
   children: ReactNode;
-  variant?: 'contained' | 'outlined'; 
-
+  variant?: 'contained' | 'outlined';
 }
 
 export const Button: React.FC<Props> = ({
@@ -20,22 +25,29 @@ export const Button: React.FC<Props> = ({
   icon,
   buttonStyle,
   textStyle,
-  iconStyle,
-  variant
+  variant,
 }) => {
   const textColor = variant === 'contained' ? '#fff' : Colors.primary;
   const borderColor = variant === 'outlined' ? Colors.primary : 'transparent';
-  const backgroundColor = variant === 'contained' ? Colors.primary : 'transparent';
+  const backgroundColor =
+    variant === 'contained' ? Colors.primary : 'transparent';
 
-  
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle, {
-      backgroundColor: backgroundColor,
-      borderColor: borderColor
-    }]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.button,
+        buttonStyle,
+        {
+          backgroundColor: backgroundColor,
+          borderColor: borderColor,
+        },
+      ]}>
       <View style={styles.container}>
-      {icon}
-        <Text style={[styles.text, textStyle, {color: textColor}]}>{children}</Text>
+        {icon}
+        <Text style={[styles.text, textStyle, {color: textColor}]}>
+          {children}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -47,7 +59,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 4,
     alignSelf: 'stretch',
-    borderWidth: 1
+    borderWidth: 1,
   },
   container: {
     flexDirection: 'row',
@@ -60,4 +72,3 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
-

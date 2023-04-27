@@ -3,7 +3,7 @@ import {Button, Calendar, Font, Margin, Padding, Stack} from './components';
 import {Text, SafeAreaView} from 'react-native';
 import FontSize from './constants/FontSize';
 import {Accordion} from './components';
-import {Plus, BulletR} from "./assets"
+import {Plus} from './assets';
 import Colors from './constants/Colors';
 
 const Test = () => {
@@ -45,10 +45,16 @@ const Test = () => {
           <Accordion title="hello">
             <Text>hello this is boduy</Text>
           </Accordion>
-          <Button variant="contained" onPress={handlePress} icon={<Plus fill={Colors.background}/>} >
+          <Button
+            variant="contained"
+            onPress={handlePress}
+            icon={<Plus fill={Colors.background} />}>
             contained
           </Button>
-          <Button variant="outlined" onPress={handlePress} icon={<Plus fill={Colors.primary}/>}>
+          <Button
+            variant="outlined"
+            onPress={handlePress}
+            icon={<Plus fill={Colors.primary} />}>
             outlined
           </Button>
         </Stack>
