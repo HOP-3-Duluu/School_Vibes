@@ -16,14 +16,16 @@ interface FontProps {
     | '800'
     | '900';
   fontSize?: number;
+  color?: string;
 }
 
 export const Font = ({
   children,
   fontWeight = 'normal',
   fontSize = FontSize.small,
+  color,
 }: FontProps) => {
-  const textStyle = [styles.text, {fontWeight, fontSize}];
+  const textStyle = [styles.text, {fontWeight, fontSize, color}];
 
   return <Text style={textStyle}>{children}</Text>;
 };
