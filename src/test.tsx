@@ -28,37 +28,37 @@ const Test = () => {
           alignItems = 'flex-start',
           justifyContent = 'flex-start',
           style, */}
-        {/* <Stack spacing={10}>
+        <Stack spacing={10}>
           <Text>Stack component 1</Text>
           <Text>Stack component 2</Text>
           <Text>Stack component 3</Text>
-        </Stack> */}
+        </Stack>
         {/*
         default
         fontWeight = 'normal'
         fontSize = 14
       */}
-        {/* 
+
         <Font fontWeight="bold" fontSize={FontSize.medium}>
           Font component 1
-        </Font> */}
+        </Font>
 
         {/*
           zaava; vertical horizontal gej bicne
         */}
-        {/* <Padding all={26}>
+        <Padding all={26}>
           <Text>This text has padding of 16 on all sides.</Text>
         </Padding>
         <Margin all={10}>
           <Calendar />
-        </Margin> */}
+        </Margin>
 
         <Margin all={10}>
           <Stack width="100%" spacing={10}>
             <Paper>
               <ProgressBar />
             </Paper>
-            {/* <Accordion title="hello">
+            <Accordion title="hello">
               <Text>hello this is boduy</Text>
             </Accordion>
             <Button
@@ -72,7 +72,7 @@ const Test = () => {
               onPress={handlePress}
               icon={<Plus fill={Colors.primary} />}>
               outlined
-            </Button> */}
+            </Button>
           </Stack>
         </Margin>
       </SafeAreaView>
