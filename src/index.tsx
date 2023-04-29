@@ -1,6 +1,6 @@
 import {SafeAreaView} from 'react-native';
 import React from 'react';
-import Test from './Test';
+import Test from './test';
 
 const App = () => {
   return (
