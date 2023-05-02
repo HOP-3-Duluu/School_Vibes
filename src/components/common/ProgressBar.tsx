@@ -4,15 +4,31 @@ import {Font, Margin, Stack} from '../core';
 import {Clock} from '../../assets';
 import Colors from '../../constants/Colors';
 
-export const ProgressBar = () => {
+interface dataProps {
+  start: number;
+  end: number;
+}
+
+export const ProgressBar = ({
+  time,
+  progress,
+}: {
+  time: dataProps[];
+  progress: any;
+}) => {
   return (
     <View>
       <Font fontWeight="bold" fontSize={24}>
         Ofspace project
       </Font>
       <Margin top={10} bottom={3}>
-        <Time start={10} end={12} />
-        <Time start={23} end={24} />
+        {time?.map(({start, end}: dataProps, index: number) => {
+          return (
+            <View key={index + end}>
+              <Time start={start} end={end} />
+            </View>
+          );
+        })}
       </Margin>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -29,7 +45,19 @@ export const ProgressBar = () => {
       </Stack>
       <Margin top={20}>
         <Stack spacing={10} width="100%">
-          <Font>PRogress</Font>
+          <Stack direction="row" spacing={10}>
+            <Font>
+              Done : {Math.round((progress.done / progress.all) * 100)}%
+            </Font>
+            <Font>
+              In progress :{' '}
+              {Math.round((progress.progress / progress.all) * 100)}%
+            </Font>
+            <Font>
+              Todo : {Math.round((progress.todo / progress.all) * 100)}%
+            </Font>
+            <Font>All : 100%</Font>
+          </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Type type={'Done'} />

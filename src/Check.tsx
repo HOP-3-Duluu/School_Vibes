@@ -19,6 +19,22 @@ const Test = () => {
   const handlePress = () => {
     // Handle button press
   };
+  const time = [
+    {
+      start: 10,
+      end: 12,
+    },
+    {
+      start: 15,
+      end: 23,
+    },
+  ];
+  const progress = {
+    done: 40,
+    progress: 20,
+    todo: 10,
+    all: 100,
+  };
   return (
     <ScrollView>
       <SafeAreaView>
@@ -56,7 +72,7 @@ const Test = () => {
         <Margin all={10}>
           <Stack width="100%" spacing={10}>
             <Paper>
-              <ProgressBar />
+              <ProgressBar time={time} progress={progress} />
             </Paper>
             <Accordion title="hello">
               <Text>hello this is boduy</Text>
