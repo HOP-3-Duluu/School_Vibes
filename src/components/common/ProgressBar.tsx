@@ -1,136 +1,55 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Font, Margin, Stack} from '../core';
-import {Clock} from '../../assets';
-import Colors from '../../constants/Colors';
+import {View, StyleSheet, Text} from 'react-native';
+import {Svg, Circle, Path} from 'react-native-svg';
 
-export const ProgressBar = () => {
+export const ProgressBar = ({progress, width = 120, height = 60}) => {
+  const radius = height / 2;
+  const strokeWidth = height / 10;
+  const circumference = 2 * Math.PI * radius;
+  const progressOffset = (1 - progress) * circumference;
+
   return (
-    <View>
-      <Font fontWeight="bold" fontSize={24}>
-        Ofspace project
-      </Font>
-      <Margin top={10} bottom={3}>
-        <Time start={10} end={12} />
-        <Time start={23} end={24} />
-      </Margin>
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Font fontWeight="600" fontSize={24}>
-          Overall Activity
-        </Font>
-        <TouchableOpacity>
-          <Stack direction="row" spacing={0.1}>
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-          </Stack>
-        </TouchableOpacity>
-      </Stack>
-      <Margin top={20}>
-        <Stack spacing={10} width="100%">
-          <Font>PRogress</Font>
-
-          <Stack direction="row" justifyContent="space-between">
-            <Type type={'Done'} />
-            <Type type={'ToDo'} />
-            <Type type={'Progress'} />
-          </Stack>
-        </Stack>
-      </Margin>
+    <View style={[styles.container, {width, height}]}>
+      <Svg width={width} height={height}>
+        <Circle
+          cx={radius}
+          cy={radius}
+          r={radius - strokeWidth / 2}
+          strokeWidth={strokeWidth}
+          stroke="#E0E0E0"
+          fill="none"
+        />
+        <Path
+          stroke="#FFC107"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          d={`M ${radius},${strokeWidth / 2} A ${radius - strokeWidth / 2},${
+            radius - strokeWidth / 2
+          } 0 0 1 ${radius},${2 * radius - strokeWidth / 2}`}
+          strokeDasharray={`${circumference} ${circumference}`}
+          strokeDashoffset={progressOffset}
+        />
+        <Path
+          stroke="#E91E63"
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          d={`M ${radius},${strokeWidth / 2} A ${radius - strokeWidth / 2},${
+            radius - strokeWidth / 2
+          } 0 0 0 ${radius},${2 * radius - strokeWidth / 2}`}
+          strokeDasharray={`${circumference} ${circumference}`}
+          strokeDashoffset={progressOffset}
+        />
+      </Svg>
+      <Text>{progress * 100}%</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#333',
-    marginHorizontal: 2,
-  },
-});
-
-interface TimeProps {
-  start: number;
-  end: number;
-}
-
-const Time = ({start, end}: TimeProps) => {
-  const convertDate = (num: number) => {
-    const hours = Math.floor(num);
-    const minutes = (num % 1) * 60;
-    const period = hours >= 12 ? 'pm' : 'am';
-    const adjustedHours = hours % 12 || 12;
-    return `${adjustedHours}:${minutes < 10 ? '0' : ''}${Math.floor(
-      minutes,
-    )} ${period}`;
-  };
-  return (
-    <Stack
-      direction="row"
-      justifyContent="space-between"
-      style={{height: 40}}
-      alignItems="center">
-      <Stack direction="row" spacing={3} alignItems="center">
-        <View>
-          <Clock />
-        </View>
-        <Font color={Colors.gray}>
-          {convertDate(start)} - {convertDate(end)}
-        </Font>
-      </Stack>
-      <TouchableOpacity style={TimeStyle.type}>
-        <Font color={Colors.background} fontWeight="500">
-          On Going
-        </Font>
-      </TouchableOpacity>
-    </Stack>
-  );
-};
-
-interface TypeProps {
-  type: 'Done' | 'Progress' | 'ToDo';
-}
-
-const Type = ({type}: TypeProps) => {
-  const Color = (type: string) => {
-    switch (type) {
-      case 'Done':
-        return '#e5c3c8';
-      case 'Progress':
-        return '#c9f0ce';
-      case 'ToDo':
-        return '#e1d5fa';
-      default:
-        return '#edf1f2';
-    }
-  };
-
-  return (
-    <Stack direction="row" spacing={5} alignItems="center">
-      <View
-        style={{
-          backgroundColor: Color(type),
-          ...TimeStyle.dot,
-        }}
-      />
-      <Font>{type}</Font>
-    </Stack>
-  );
-};
-
-const TimeStyle = StyleSheet.create({
-  type: {
-    backgroundColor: Colors.secondary,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  dot: {
-    width: 14,
-    height: 14,
-    borderRadius: 7,
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -6,7 +6,7 @@ import {
   Margin,
   Padding,
   Paper,
-  ProgressBar,
+  TodoBar,
   Stack,
 } from './components';
 import {Text, SafeAreaView, ScrollView} from 'react-native';
@@ -56,7 +56,7 @@ const Test = () => {
         <Margin all={10}>
           <Stack width="100%" spacing={10}>
             <Paper>
-              <ProgressBar />
+              <TodoBar />
             </Paper>
             <Accordion title="hello">
               <Text>hello this is boduy</Text>
