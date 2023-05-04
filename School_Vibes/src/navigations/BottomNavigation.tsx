@@ -2,15 +2,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, Text} from 'react-native';
 import { HomeIcon, ProfileIcon, CalendarIcon, TaskIcon } from '../assets';
 import Colors from '../constants/Colors';
-import { Calendar } from '../components';
+import { Calendar, Font } from '../components';
 import Test from '../Check';
-
-const Profile = () => {
-  return <Text>Profile</Text>;
-};
-const Task = () => {
-    return <Text>Task</Text>;
-};
+import { Profile, Task } from '../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,10 +16,7 @@ export const Navigator = () => {
           component={Test}
           options={{
             tabBarLabel: ({focused}: any) => (
-              <Text
-                style={focused ? styles.display : styles.noDisplay}>
-                •
-              </Text>
+              focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
             ),
             headerShown: false,
             tabBarIcon: ({focused}: any) => (
@@ -38,10 +29,7 @@ export const Navigator = () => {
           component={Calendar}
           options={{
             tabBarLabel: ({focused}: any) => (
-                <Text
-                style={focused ? styles.display : styles.noDisplay}>
-                •
-              </Text>
+                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
             ),
             headerShown: false,
             tabBarIcon: ({focused}: any) => (
@@ -54,10 +42,7 @@ export const Navigator = () => {
           component={Profile}
           options={{
             tabBarLabel: ({focused}: any) => (
-                <Text
-                style={focused ? styles.display : styles.noDisplay}>
-                •
-              </Text>
+                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
             ),
             headerShown: false,
             tabBarIcon: ({focused}: any) => (
@@ -70,10 +55,7 @@ export const Navigator = () => {
           component={Task}
           options={{
             tabBarLabel: ({focused}: any) => (
-                <Text
-                style={focused ? styles.display : styles.noDisplay}>
-                •
-              </Text>
+                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
             ),
             headerShown: false,
             tabBarIcon: ({focused}: any) => (
@@ -84,13 +66,3 @@ export const Navigator = () => {
       </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-    display: {
-        color: Colors.primary,
-        fontSize: 25,
-    },
-    noDisplay: {
-        display: 'none'
-    }
-})
