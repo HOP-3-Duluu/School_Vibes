@@ -1,6 +1,8 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
+
 import FontSize from '../../constants/FontSize';
+import {Text, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+
 interface FontProps {
   children: React.ReactNode;
   fontWeight?:
@@ -17,6 +19,7 @@ interface FontProps {
     | '900';
   fontSize?: number;
   color?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const Font = ({
@@ -24,8 +27,10 @@ export const Font = ({
   fontWeight = 'normal',
   fontSize = FontSize.small,
   color,
+  style,
 }: FontProps) => {
-  const textStyle = [styles.text, {fontWeight, fontSize, color}];
+  console.log(style)
+  const textStyle = [styles.text, {fontWeight, fontSize }, style ];
 
   return <Text style={textStyle}>{children}</Text>;
 };

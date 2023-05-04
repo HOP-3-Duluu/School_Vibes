@@ -9,12 +9,12 @@ import {
   ProgressBar,
   Stack,
 } from './components';
-import {Text, SafeAreaView, ScrollView} from 'react-native';
+import {Text, SafeAreaView, ScrollView, View} from 'react-native';
 import FontSize from './constants/FontSize';
 import {Accordion} from './components';
 import {Plus} from './assets';
 import Colors from './constants/Colors';
-
+import { TaskBox } from './components/common/TaskBox';
 const Test = () => {
   const handlePress = () => {
     // Handle button press
@@ -91,6 +91,10 @@ const Test = () => {
             </Button>
           </Stack>
         </Margin>
+
+        <View>
+          <TaskBox deadline='5:12' title='Task boox ex' groupname='11-4'/>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );
