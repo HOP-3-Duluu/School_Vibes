@@ -1,68 +1,92 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, Text} from 'react-native';
-import { HomeIcon, ProfileIcon, CalendarIcon, TaskIcon } from '../assets';
+import {
+  createBottomTabNavigator,
+  BottomTabNavigationOptions,
+  BottomTabScreenProps,
+} from '@react-navigation/bottom-tabs';
+import {HomeIcon, ProfileIcon, CalendarIcon, TaskIcon} from '../assets';
 import Colors from '../constants/Colors';
-import { Calendar, Font } from '../components';
+import {Calendar, Font} from '../components';
 import Test from '../Check';
-import { Profile, Task } from '../screens';
+import {Profile, Task} from '../screens';
+
+interface ITabBarLabelProps {
+  focused: boolean;
+}
+
+interface ITabBarIconProps {
+  focused: boolean;
+}
+
+interface ITabScreenProps extends BottomTabScreenProps<any> {}
+
+interface ITabOptions {
+  tabBarLabel: ((props: ITabBarLabelProps) => JSX.Element) | string;
+  headerShown: boolean;
+  tabBarIcon: ((props: ITabBarIconProps) => JSX.Element) | React.ReactNode;
+}
+
+interface ITabScreen {
+  name: string;
+  component: React.ComponentType<any>;
+  options?: ITabOptions | ((props: ITabScreenProps) => ITabOptions);
+}
 
 const Tab = createBottomTabNavigator();
 
 export const Navigator = () => {
+  const getTabScreenOptions = (
+    label: string,
+    icon: JSX.Element,
+  ): ITabOptions => ({
+    tabBarLabel: ({focused}: ITabBarLabelProps) =>
+      focused && (
+        <Font fontSize={25} color={Colors.primary}>
+          •
+        </Font>
+      ),
+    headerShown: false,
+    tabBarIcon: ({focused}: ITabBarIconProps) => icon,
+  });
+
+  const tabScreens: ITabScreen[] = [
+    {
+      name: 'Home',
+      component: Test,
+      options: getTabScreenOptions('Home', <HomeIcon color={Colors.primary} />),
+    },
+    {
+      name: 'Calendar',
+      component: Calendar,
+      options: getTabScreenOptions(
+        'Calendar',
+        <CalendarIcon color={Colors.primary} />,
+      ),
+    },
+    {
+      name: 'Profile',
+      component: Profile,
+      options: getTabScreenOptions(
+        'Profile',
+        <ProfileIcon color={Colors.primary} />,
+      ),
+    },
+    {
+      name: 'Task',
+      component: Task,
+      options: getTabScreenOptions('Task', <TaskIcon color={Colors.primary} />),
+    },
+  ];
+
   return (
-      <Tab.Navigator>
+    <Tab.Navigator>
+      {tabScreens.map((screen: ITabScreen, index: number) => (
         <Tab.Screen
-          name="Home"
-          component={Test}
-          options={{
-            tabBarLabel: ({focused}: any) => (
-              focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
-            ),
-            headerShown: false,
-            tabBarIcon: ({focused}: any) => (
-              <HomeIcon color={focused ? Colors.secondary : Colors.primary} />
-            ),
-          }}
+          key={index}
+          name={screen.name}
+          component={screen.component}
+          options={screen.options}
         />
-        <Tab.Screen
-          name="Calendar"
-          component={Calendar}
-          options={{
-            tabBarLabel: ({focused}: any) => (
-                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
-            ),
-            headerShown: false,
-            tabBarIcon: ({focused}: any) => (
-              <CalendarIcon color={focused ? Colors.secondary : Colors.primary} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarLabel: ({focused}: any) => (
-                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
-            ),
-            headerShown: false,
-            tabBarIcon: ({focused}: any) => (
-              <ProfileIcon color={focused ? Colors.secondary : Colors.primary} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Task"
-          component={Task}
-          options={{
-            tabBarLabel: ({focused}: any) => (
-                focused ? <Font fontSize={25} color={Colors.primary} >•</Font> : ''
-            ),
-            headerShown: false,
-            tabBarIcon: ({focused}: any) => (
-              <TaskIcon color={focused ? Colors.secondary : Colors.primary} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
+      ))}
+    </Tab.Navigator>
   );
 };

@@ -1,5 +1,10 @@
-import { Text } from "react-native";
+import {SafeAreaView, Text} from 'react-native';
+import {Font} from '../components';
 
 export const Task = () => {
-    return <Text>Task</Text>;
+  return (
+    <SafeAreaView>
+      <Font>Tasl</Font>
+    </SafeAreaView>
+  );
 };
