@@ -1,6 +1,5 @@
 import {
   createBottomTabNavigator,
-  BottomTabNavigationOptions,
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import {HomeIcon, ProfileIcon, CalendarIcon, TaskIcon} from '../assets';
@@ -45,7 +44,7 @@ export const Navigator = () => {
         </Font>
       ),
     headerShown: false,
-    tabBarIcon: ({focused}: ITabBarIconProps) => icon,
+    tabBarIcon: () => icon,
   });
 
   const tabScreens: ITabScreen[] = [
