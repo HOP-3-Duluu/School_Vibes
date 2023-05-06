@@ -8,7 +8,7 @@ const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 const widthBaseScale = SCREEN_WIDTH / 375;
 const heightBaseScale = SCREEN_HEIGHT / 667;
 
-function norm(size: number, based: 'height' | 'width' = 'width') {
+const  norm = (size: number, based: 'height' | 'width' = 'width')=> {
   const newSize =
     based === 'height' ? size * heightBaseScale : size * widthBaseScale;
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
@@ -22,29 +22,42 @@ interface TaskBoxProps {
 }
 export const TaskBox = ({
   title,
-  deadline = '5:22',
-  groupname = 'Ulaan zagalmai',
+  deadline = '6:30',
+  groupname ,
   priority = 'Medium',
   backColor = '#FCF5F6',
 }: TaskBoxProps) => {
   let now = new Date();
-  let date = now.getDate();
-  let month = now.getMonth() + 1;
-  let givenMonth: number = Number(deadline.split(':')[0]);
-  let givenDay: number = Number(deadline.split(':')[1]);
-  let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',];
-  let months = ['January','February','March','April','May','June','July','August','September','October','November','December',];
-  let daybyname = days[now.getDay()];
-  let monthbyname = months[now.getMonth()];
-  let dayDiff: number = (givenMonth - month) * 30 + givenDay - date;
-  let color = [0, 255, 0];
+  // let date = now.getDate();
+  // let month = now.getMonth() + 1;
+  // let givenMonth: number = Number(deadline.split(':')[0]);
+  // let givenDay: number = Number(deadline.split(':')[1]);
+  // let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',];
+  // let months = ['January','February','March','April','May','June','July','August','September','October','November','December',];
+  // let daybyname = days[now.getDay()];
+  // let monthbyname = months[now.getMonth()];
+  // let dayDiff: number = (givenMonth - month) * 30 + givenDay - date;
+  // let color = [0, 255, 0];
+  let days= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',]
+  let months =  ['January','February','March','April','May','June','July','August','September','October','November','December',]
+  let data:any ={
+    date:now.getDate(),
+    month:now.getMonth() + 1,
+    givenMonth: Number(deadline.split(':')[0]),
+    givenDay:  Number(deadline.split(':')[1]),
+    daybyname : days[now.getDay()],
+    monthbyname : months[now.getMonth()],
+    color : [0, 255, 0]
+  }
+  let dayDiff =   (data.givenMonth - data.month) * 30 + data.givenDay - data.date
+
   if (dayDiff >= 10 && dayDiff < 20) {
-    color[1] = 255;
-    color[0] = (20 - dayDiff) * 25.5;
+    data.color[1] = 255;
+    data.color[0] = (20 - dayDiff) * 25.5;
   }
   if (dayDiff < 10) {
-    color[0] = 255;
-    color[1] = 255 - (10 - dayDiff) * 25.5;
+    data.color[0] = 255;
+    data.color[1] = 255 - (10 - dayDiff) * 25.5;
   }
   return (
     <View >
@@ -54,7 +67,7 @@ export const TaskBox = ({
           <View
             style={{
               ...styles.circle,
-              backgroundColor: `rgb(${color[0]}, ${color[1]},${color[2]})`,
+              backgroundColor: `rgb(${data.color[0]}, ${data.color[1]},${data.color[2]})`,
             }}></View>
           <View style={styles.priority}>
             <Font style={{padding: norm(7)}}>{priority}</Font>
@@ -72,11 +85,11 @@ export const TaskBox = ({
             </Font>
             <View style={{...styles.row, ...styles.center, ...styles.between}}>
               <Margin right={norm(5)}>
-                <Font fontSize={norm(14)}>{daybyname} |</Font>
+                <Font fontSize={norm(14)}>{data.daybyname} |</Font>
               </Margin>
               <Margin right={norm(5)}>
                 <Font>
-                  {monthbyname}:{date}
+                  {data.monthbyname}:{data.date}
                 </Font>
               </Margin>
               <TouchableOpacity>
@@ -102,12 +115,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom:50,
     padding: 20,
-    width: norm(300, 'width'),
-    marginHorizontal: norm(32.5, 'width'),
+
+    marginHorizontal: norm(10, 'width'),
     height: 120,
     borderRadius: 15,
     shadowColor: 'blue',
-    shadowOffset: {width: norm(20, 'width'), height: 20},
+    shadowOffset: {width: norm(3, 'width'), height: 5},
     shadowOpacity: 0.1,
   },
   circle: {

@@ -11,10 +11,10 @@ import {
 } from './components';
 import {Text, SafeAreaView, ScrollView} from 'react-native';
 import FontSize from './constants/FontSize';
-import {Accordion} from './components';
+import {TaskBox ,Accordion} from './components';
 import {Plus} from './assets';
 import Colors from './constants/Colors';
-import { TaskBox } from './components/common/TaskBox';
+
 const Test = () => {
   const handlePress = () => {
     // Handle button press
