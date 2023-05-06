@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, TextStyle} from 'react-native';
+import {Text, TextStyle, StyleProp, ViewStyle} from 'react-native';
 import FontSize from '../../constants/FontSize';
 
 interface FontProps {
@@ -9,6 +9,7 @@ interface FontProps {
   color?: string;
   textAlign?: TextStyle['textAlign'];
   lineHeight?: number;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const Font: React.FC<FontProps> = ({
@@ -18,6 +19,7 @@ export const Font: React.FC<FontProps> = ({
   color,
   textAlign,
   lineHeight,
+  style,
 }) => {
   const textStyle: TextStyle = {
     fontWeight,
@@ -27,5 +29,5 @@ export const Font: React.FC<FontProps> = ({
     lineHeight,
   };
 
-  return <Text style={textStyle}>{children}</Text>;
+  return <Text style={[textStyle, style]}>{children}</Text>;
 };
