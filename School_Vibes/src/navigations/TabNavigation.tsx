@@ -5,8 +5,20 @@ import Colors from '../constants/Colors';
 import {Calendar, Font} from '../components';
 import Test from '../Check';
 import {Profile, Task} from '../screens';
+import {View} from 'react-native';
 
 const Tab = createBottomTabNavigator();
+
+const BgColor = ({children}: any) => (
+  <View
+    style={{
+      backgroundColor: Colors.background,
+      padding: 8,
+      borderRadius: 50,
+    }}>
+    {children}
+  </View>
+);
 
 export const TabNavigation = () => {
   const getTabScreenOptions = (label: string, icon: JSX.Element) => ({
@@ -23,24 +35,38 @@ export const TabNavigation = () => {
   const tabScreens = [
     {
       component: Test,
-      options: getTabScreenOptions('Home', <HomeIcon color={Colors.primary} />),
+      options: getTabScreenOptions(
+        'Home',
+        <BgColor>
+          <HomeIcon color={Colors.primary} />
+        </BgColor>,
+      ),
     },
     {
       component: Task,
-      options: getTabScreenOptions('Task', <TaskIcon color={Colors.primary} />),
+      options: getTabScreenOptions(
+        'Task',
+        <BgColor>
+          <TaskIcon color={Colors.primary} />
+        </BgColor>,
+      ),
     },
     {
       component: Calendar,
       options: getTabScreenOptions(
         'Calendar',
-        <CalendarIcon color={Colors.primary} />,
+        <BgColor>
+          <CalendarIcon color={Colors.primary} />
+        </BgColor>,
       ),
     },
     {
       component: Profile,
       options: getTabScreenOptions(
         'Profile',
-        <ProfileIcon color={Colors.primary} />,
+        <BgColor>
+          <ProfileIcon color={Colors.primary} />
+        </BgColor>,
       ),
     },
   ];
