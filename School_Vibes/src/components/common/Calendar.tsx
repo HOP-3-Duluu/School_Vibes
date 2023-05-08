@@ -1,9 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import Colors from '../../constants/Colors';
+import {Font, Margin, Stack} from '../core';
 
 export const Calendar = () => {
+  const [selectedRange, setSelectedRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
   const [selectedDate, setSelectedDate] = useState(moment());
 
   const renderCalendar = () => {
@@ -14,44 +20,110 @@ export const Calendar = () => {
       .subtract(startOfMonth.day(), 'days');
     const endOfCalendar = endOfMonth.clone().add(6 - endOfMonth.day(), 'days');
 
-    let day = startOfCalendar.clone();
     const days = [];
+    let day = startOfCalendar.clone();
 
     while (day.isSameOrBefore(endOfCalendar)) {
       days.push(day);
       day = day.clone().add(1, 'day');
     }
 
+    const handleDayPress = day => {
+      if (
+        !selectedRange.startDate ||
+        (selectedRange.startDate && selectedRange.endDate)
+      ) {
+        setSelectedRange({startDate: day, endDate: null});
+      } else if (day.isBefore(selectedRange.startDate, 'day')) {
+        setSelectedRange({startDate: day, endDate: selectedRange.endDate});
+      } else {
+        setSelectedRange({...selectedRange, endDate: day});
+      }
+    };
+
+    const isDayInRange = day => {
+      if (selectedRange.startDate && selectedRange.endDate) {
+        return (
+          day.isSameOrAfter(selectedRange.startDate, 'day') &&
+          day.isSameOrBefore(selectedRange.endDate, 'day')
+        );
+      }
+      return false;
+    };
+
+    const isDaySelected = day =>
+      day.isSame(selectedRange.startDate, 'day') ||
+      day.isSame(selectedRange.endDate, 'day');
+
+    const isToday = day => day.isSame(moment(), 'day');
+
     return (
-      <View style={styles.calendarContainer}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="center"
+        style={{flexWrap: 'wrap'}}>
         {days.map((day, index) => (
           <TouchableOpacity
             key={index}
             style={[
               styles.calendarDay,
-              day.isSame(selectedDate, 'day') && styles.calendarDaySelected,
+              isDayInRange(day) && styles.calendarDaySelectedRange,
+              isDaySelected(day) && styles.calendarDaySelected,
               day.month() !== selectedDate.month() &&
                 styles.calendarDayDisabled,
             ]}
-            onPress={() => setSelectedDate(day)}
-            disabled={day.month() !== selectedDate.month()}>
+            onPress={() => handleDayPress(day)}>
             <Text
               style={[
                 styles.calendarDayText,
-                day.isSame(moment(), 'day') && styles.calendarDayToday,
+                isToday(day) && styles.calendarDayToday,
+                isDaySelected(day) && styles.calendarDaySelected,
               ]}>
               {day.date()}
             </Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </Stack>
     );
+  };
+
+  const goToPreviousMonth = () => {
+    setSelectedDate(selectedDate.clone().subtract(1, 'month'));
+  };
+
+  const goToNextMonth = () => {
+    setSelectedDate(selectedDate.clone().add(1, 'month'));
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Custom Calendar</Text>
-      <Text style={styles.subtitle}>{selectedDate.format('MMMM YYYY')}</Text>
+      <View>
+        <Stack justifyContent="center" direction="column" alignItems="center">
+          <Margin bottom={10}>
+            <Font fontSize={22} fontWeight="600">
+              {selectedDate.format('YYYY')}
+            </Font>
+          </Margin>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={goToPreviousMonth}>
+              <Font fontSize={16} fontWeight="bold" color={Colors.primary}>
+                {'< Previous'}
+              </Font>
+            </TouchableOpacity>
+            <Margin horizontal={60}>
+              <Font fontSize={22} fontWeight="600">
+                {selectedDate.format('MMMM')}
+              </Font>
+            </Margin>
+            <TouchableOpacity onPress={goToNextMonth}>
+              <Font fontSize={16} fontWeight="bold" color={Colors.primary}>
+                {'Next >'}
+              </Font>
+            </TouchableOpacity>
+          </View>
+        </Stack>
+      </View>
       {renderCalendar()}
     </View>
   );
@@ -59,17 +131,14 @@ export const Calendar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.light,
+    padding: 10,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  subtitle: {
-    fontSize: 18,
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
     marginBottom: 16,
   },
   calendarContainer: {
@@ -92,12 +161,17 @@ const styles = StyleSheet.create({
   },
   calendarDayToday: {
     fontWeight: 'bold',
-    color: Colors.whiteText,
   },
   calendarDaySelected: {
     backgroundColor: Colors.primary,
+    color: Colors.background,
+    fontWeight: 'bold',
   },
   calendarDayDisabled: {
     opacity: 0.3,
+  },
+  calendarDaySelectedRange: {
+    borderWidth: 1,
+    borderColor: Colors.primary,
   },
 });
