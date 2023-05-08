@@ -6,3 +6,4 @@ export * from './Accordion';
 export * from './Box';
 export * from './button';
 export * from './Paper';
+export * from './Tabs';
