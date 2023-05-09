@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 
 export const hello = async (
   event: APIGatewayProxyEvent
@@ -13,5 +13,5 @@ export const hello = async (
       null,
       2
     ),
-  };
-};
+  }
+}
