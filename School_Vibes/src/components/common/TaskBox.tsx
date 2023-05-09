@@ -79,6 +79,7 @@ export const TaskBox = ({
         </Font>
         {/* bottom line */}
         <Margin top={norm(10)}>
+
           <View style={{...styles.row, ...styles.center, ...styles.between}}>
             <Font style={{opacity: 0.5, display: 'flex'}} fontSize={norm(14)}>
               {groupname}
@@ -93,8 +94,8 @@ export const TaskBox = ({
                 </Font>
               </Margin>
               <TouchableOpacity>
-                {/* calendar luu route => ? */}
-                <CalendarIcon />
+
+                <CalendarIcon color={"black"} />
               </TouchableOpacity>
             </View>
           </View>
