@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-export const CalendarIcon = ({color}: any) => {
+export const CalendarIcon = ({color}:any , props?:any) => {
   return (
     <Svg width={30} height={30} viewBox="0 0 50 50" fill="none">
       <Path
@@ -10,6 +10,7 @@ export const CalendarIcon = ({color}: any) => {
         strokeWidth={5}
         strokeLinecap="round"
         strokeLinejoin="round"
+        {...props}
       />
     </Svg>
   );
