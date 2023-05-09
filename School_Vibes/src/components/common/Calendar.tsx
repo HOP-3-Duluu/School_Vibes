@@ -108,7 +108,7 @@ export const Calendar = () => {
           <View style={styles.header}>
             <TouchableOpacity onPress={goToPreviousMonth}>
               <Font fontSize={16} fontWeight="bold" color={Colors.primary}>
-                {'< Previous'}
+                {'<'}
               </Font>
             </TouchableOpacity>
             <Margin horizontal={60}>
@@ -118,7 +118,7 @@ export const Calendar = () => {
             </Margin>
             <TouchableOpacity onPress={goToNextMonth}>
               <Font fontSize={16} fontWeight="bold" color={Colors.primary}>
-                {'Next >'}
+                {'>'}
               </Font>
             </TouchableOpacity>
           </View>
