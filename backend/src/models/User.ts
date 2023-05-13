@@ -3,7 +3,13 @@ import { db } from "../lib/database"
 
 const TableName = "Users"
 
-export const CreateUser = async (user) => {
+interface UserProps {
+  name: string
+  id: string
+  image: string
+}
+
+export const CreateUser = async (user: UserProps) => {
   const marshalledUser = marshall(user)
 
   const params = {

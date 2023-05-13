@@ -5,7 +5,7 @@ import {
   DeleteGroup,
   GetGroup,
   UpdateGroup,
-} from "../models/Groups"
+} from "../models/group"
 
 export const createGroup = async (
   event: APIGatewayProxyEvent
@@ -80,7 +80,7 @@ export const getGroup = async (
       }
     }
 
-    const message = GetGroup(id)
+    const message = await GetGroup(id)
 
     if (!message) {
       return {

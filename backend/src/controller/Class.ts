@@ -5,7 +5,7 @@ import {
   DeleteClass,
   GetClass,
   UpdateClass,
-} from "../models/Class"
+} from "../models/class"
 
 export const createClass = async (
   event: APIGatewayProxyEvent

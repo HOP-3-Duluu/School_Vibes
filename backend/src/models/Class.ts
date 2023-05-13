@@ -3,7 +3,14 @@ import { db } from "../lib/database"
 
 const TableName = "Classes"
 
-export const CreateClass = async (Class: any) => {
+interface ClassProp {
+  name: string
+  id: string
+  image: string
+  description: string
+}
+
+export const CreateClass = async (Class: ClassProp) => {
   const marshalledClass = marshall(Class)
 
   const params = {
@@ -27,14 +34,14 @@ export const DeleteClass = async (classId: string): Promise<string> => {
   return "Class deleted successfully"
 }
 
-export const GetClass = async (classId: string): Promise<string> => {
+export const GetClass = async (classId: string): Promise<any> => {
   const params = {
     TableName,
     Key: marshall({ id: classId }),
   }
 
   const { Item: item } = await db.getItem(params)
-  return JSON.stringify(item)
+  return item
 }
 
 export const UpdateClass = async (

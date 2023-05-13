@@ -3,7 +3,14 @@ import { db } from "../lib/database"
 
 const TableName = "Groups"
 
-export const CreateGroup = async (group) => {
+interface GroupProps {
+  name: string
+  id: string
+  image: string
+  description: string
+}
+
+export const CreateGroup = async (group: GroupProps) => {
   const marshalledGroup = marshall(group)
 
   const params = {
@@ -27,14 +34,13 @@ export const DeleteGroup = async (groupId: string): Promise<string> => {
   return "Group deleted successfully"
 }
 
-export const GetGroup = async (groupId: string): Promise<string> => {
+export const GetGroup = async (groupId: string): Promise<any> => {
   const params = {
     TableName,
     Key: marshall({ id: groupId }),
   }
-
   const { Item: item } = await db.getItem(params)
-  return JSON.stringify(item)
+  return item
 }
 
 export const UpdateGroup = async (

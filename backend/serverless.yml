@@ -5,16 +5,84 @@ frameworkVersion: "3"
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs16.x
   region`: ap-southeast-1
 
 functions:
-  hello:
-    handler: handler.hello
+  getClass:
+    handler: src/controller/class.getClass
     events:
       - httpApi:
-          path: /
+          path: /class/{id}
           method: get
+  createClass:
+    handler: src/controller/class.createClass
+    events:
+      - httpApi:
+          path: /class
+          method: post
+  deleteClass:
+    handler: src/controller/class.deleteClass
+    events:
+      - httpApi:
+          path: /class
+          method: delete
+  updateClass:
+    handler: src/controller/class.updateClass
+    events:
+      - httpApi:
+          path: /class
+          method: put
+
+  createGroup:
+    handler: src/controller/group.createGroup
+    events:
+      - httpApi:
+          path: /group
+          method: post
+  deleteGroup:
+    handler: src/controller/group.deleteGroup
+    events:
+      - httpApi:
+          path: /group
+          method: delete
+  getGroup:
+    handler: src/controller/group.getGroup
+    events:
+      - httpApi:
+          path: /group/{id}
+          method: get
+  updateGroup:
+    handler: src/controller/group.updateGroup
+    events:
+      - httpApi:
+          path: /group
+          method: put
+
+  createUser:
+    handler: src/controller/group.createUser
+    events:
+      - httpApi:
+          path: /user
+          method: post
+  deleteUser:
+    handler: src/controller/group.deleteUser
+    events:
+      - httpApi:
+          path: /user
+          method: delete
+  getUser:
+    handler: src/controller/group.getUser
+    events:
+      - httpApi:
+          path: /user/{id}
+          method: get
+  updateUser:
+    handler: src/controller/group.updateUser
+    events:
+      - httpApi:
+          path: /user
+          method: put
 
 plugins:
   - serverless-plugin-typescript

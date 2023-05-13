@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { v4 as uuidv4 } from "uuid"
-import { CreateUser, DeleteUser, GetUser, UpdateUser } from "../models/User"
+import { CreateUser, DeleteUser, GetUser, UpdateUser } from "../models/user"
 
 export const createUser = async (
   event: APIGatewayProxyEvent
@@ -19,7 +19,6 @@ export const createUser = async (
       name,
       id: uuidv4(),
       image,
-      description,
     }
 
     const message = await CreateUser(User)
