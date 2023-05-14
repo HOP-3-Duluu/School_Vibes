@@ -2,17 +2,19 @@ import React from 'react';
 import {
   Button,
   Calendar,
+  Font,
   Paper,
   ProgressBar,
   Tabs,
   TaskBox,
 } from './components';
-import {Text, SafeAreaView, ScrollView, View} from 'react-native';
+import {Text, SafeAreaView, ScrollView, View, Pressable} from 'react-native';
 import {Accordion} from './components';
 import {Plus} from './assets';
 import Colors from './constants/Colors';
-
+import {useNavigation} from '@react-navigation/native';
 const Test = () => {
+  const navigation = useNavigation<any>();
   const handlePress = () => {
     // Handle button press
   };
@@ -86,6 +88,24 @@ const Test = () => {
     <ScrollView>
       <SafeAreaView>
         <Tabs tabs={tabs} initialTab={1} onTabChange={() => handleTabChange} />
+        <View>
+          <Pressable
+            onPress={() => navigation.push('GroupDetail', {name: 'group1'})}>
+            <Font>Group1</Font>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.push('GroupDetail', {name: 'group2'})}>
+            <Font>Group2</Font>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.push('GroupDetail', {name: 'group3'})}>
+            <Font>Group3</Font>
+          </Pressable>
+          <Pressable
+            onPress={() => navigation.push('GroupDetail', {name: 'group4'})}>
+            <Font>Group4</Font>
+          </Pressable>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

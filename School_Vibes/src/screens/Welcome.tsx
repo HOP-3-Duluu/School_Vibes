@@ -135,7 +135,7 @@ export const Welcome: FC<{navigation: any}> = ({navigation}) => {
             <View style={{height: 50}}>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.replace('Nav')}>
+                onPress={() => navigation.push('General')}>
                 <Font fontWeight="bold" fontSize={15}>
                   GET STARTED
                 </Font>

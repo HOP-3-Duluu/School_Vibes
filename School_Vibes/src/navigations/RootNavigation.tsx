@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useAsyncEffect} from '../hooks';
-import {Welcome} from '../screens';
+import {GroupDetail, LessonDetail, Welcome} from '../screens';
 import {TabNavigation} from './TabNavigation';
 const Stack = createNativeStackNavigator();
 
@@ -20,11 +20,21 @@ export const RootNavigation = () => {
   }, []);
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator>
       {isAppFirstLaunched && (
-        <Stack.Screen name="OnboardingScreen" component={Welcome} />
+        <Stack.Screen
+          name="OnboardingScreen"
+          component={Welcome}
+          options={{headerShown: false}}
+        />
       )}
-      <Stack.Screen name="Nav" component={TabNavigation} />
+      <Stack.Screen
+        name="General"
+        component={TabNavigation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="GroupDetail" component={GroupDetail} />
+      <Stack.Screen name="LessonDetail" component={LessonDetail} />
     </Stack.Navigator>
   );
 };

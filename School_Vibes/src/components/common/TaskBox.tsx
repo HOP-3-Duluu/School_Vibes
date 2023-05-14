@@ -1,18 +1,24 @@
-import React, {ReactNode} from 'react';
-import {View,StyleSheet,TouchableOpacity,StyleProp,ViewStyle,PixelRatio,Dimensions,} from 'react-native';
-import { CalendarIcon } from '../../assets';
-import {Font, Padding, Margin, Stack} from '../core';
-import {now} from 'moment';
+import React from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  PixelRatio,
+  Dimensions,
+  Pressable,
+} from 'react-native';
+import {CalendarIcon} from '../../assets';
+import {Font, Margin} from '../core';
+import {useNavigation} from '@react-navigation/native';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 const widthBaseScale = SCREEN_WIDTH / 375;
 const heightBaseScale = SCREEN_HEIGHT / 667;
-
-const  norm = (size: number, based: 'height' | 'width' = 'width')=> {
+const norm = (size: number, based: 'height' | 'width' = 'width') => {
   const newSize =
     based === 'height' ? size * heightBaseScale : size * widthBaseScale;
   return Math.round(PixelRatio.roundToNearestPixel(newSize));
-}
+};
 interface TaskBoxProps {
   title: string;
   deadline: string;
@@ -23,24 +29,45 @@ interface TaskBoxProps {
 export const TaskBox = ({
   title,
   deadline = '6:30',
-  groupname ,
+  groupname,
   priority = 'Medium',
   backColor = '#FCF5F6',
 }: TaskBoxProps) => {
   let now = new Date();
-
-  let days= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',]
-  let months =  ['January','February','March','April','May','June','July','August','September','October','November','December',]
-  let data:any ={
-    date:now.getDate(),
-    month:now.getMonth() + 1,
+  const navigation = useNavigation();
+  let days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  let months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  let data: any = {
+    date: now.getDate(),
+    month: now.getMonth() + 1,
     givenMonth: Number(deadline.split(':')[0]),
-    givenDay:  Number(deadline.split(':')[1]),
-    daybyname : days[now.getDay()],
-    monthbyname : months[now.getMonth()],
-    color : [0, 255, 0]
-  }
-  let dayDiff =   (data.givenMonth - data.month) * 30 + data.givenDay - data.date
+    givenDay: Number(deadline.split(':')[1]),
+    daybyname: days[now.getDay()],
+    monthbyname: months[now.getMonth()],
+    color: [0, 255, 0],
+  };
+  let dayDiff = (data.givenMonth - data.month) * 30 + data.givenDay - data.date;
 
   if (dayDiff >= 10 && dayDiff < 20) {
     data.color[1] = 255;
@@ -51,7 +78,7 @@ export const TaskBox = ({
     data.color[1] = 255 - (10 - dayDiff) * 25.5;
   }
   return (
-    <View >
+    <View>
       {/* first line */}
       <View style={{...styles.out, backgroundColor: backColor}}>
         <View style={{...styles.row, ...styles.between}}>
@@ -65,9 +92,12 @@ export const TaskBox = ({
           </View>
         </View>
         {/* title */}
-        <Font fontSize={norm(20)} fontWeight='600'>
-          {title}
-        </Font>
+        <Pressable
+          onPress={() => navigation.push('LessonDetail', {owner: 'Michaś'})}>
+          <Font fontSize={norm(20)} fontWeight="600">
+            {title}
+          </Font>
+        </Pressable>
         {/* bottom line */}
         <Margin top={norm(10)}>
           <View style={{...styles.row, ...styles.center, ...styles.between}}>
@@ -84,8 +114,7 @@ export const TaskBox = ({
                 </Font>
               </Margin>
               <TouchableOpacity>
-
-                <CalendarIcon color={"black"} />
+                <CalendarIcon color={'black'} />
               </TouchableOpacity>
             </View>
           </View>
@@ -95,7 +124,6 @@ export const TaskBox = ({
   );
 };
 const styles = StyleSheet.create({
- 
   priority: {
     display: 'flex',
     backgroundColor: '#F2EDED',
@@ -104,7 +132,7 @@ const styles = StyleSheet.create({
   },
   out: {
     marginTop: 20,
-    marginBottom:50,
+    marginBottom: 50,
     padding: 20,
 
     marginHorizontal: norm(10, 'width'),
