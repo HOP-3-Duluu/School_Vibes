@@ -1,7 +1,13 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {useAsyncEffect} from '../hooks';
-import {GroupDetail, LessonDetail, Welcome} from '../screens';
+import {
+  GroupDetail,
+  LessonDetail,
+  Welcome,
+  Login,
+  RegisterScreen,
+} from '../screens';
 import {TabNavigation} from './TabNavigation';
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +34,12 @@ export const RootNavigation = () => {
           options={{headerShown: false}}
         />
       )}
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{headerShown: false}}
+      />
+
       <Stack.Screen
         name="General"
         component={TabNavigation}

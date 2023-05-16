@@ -13,9 +13,9 @@ import {
   ProgressBar,
   Stack,
   Tabs,
-  TaskBox, 
-  Accordion, 
-  StatisticBox
+  TaskBox,
+  Accordion,
+  StatisticBox,
 } from './components';
 
 import FontSize from './constants/FontSize';
@@ -68,7 +68,12 @@ const Test = () => {
             deadline="4-13"
             groupname="ulaan zagalmai"
           />
-          <StatisticBox Progress={77} AddedTaskToday={5} TasksToDo={5} DoneTasks={4}/>
+          <StatisticBox
+            Progress={77}
+            AddedTaskToday={5}
+            TasksToDo={5}
+            DoneTasks={4}
+          />
         </View>
       ),
     },
