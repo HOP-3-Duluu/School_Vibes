@@ -6,4 +6,6 @@ export * from './Home';
 export * from './Profile';
 export * from './Calendar';
 export * from './Task';
-export * from './Correct'
+export * from './Correct';
+export * from './Password';
+export * from './Email';

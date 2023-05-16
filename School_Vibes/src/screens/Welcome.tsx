@@ -135,8 +135,8 @@ export const Welcome: FC<{navigation: any}> = ({navigation}) => {
             <View style={{height: 50}}>
               <TouchableOpacity
                 style={styles.btn}
-                onPress={() => navigation.push('General')}>
-                <Font fontWeight="bold" fontSize={15}>
+                onPress={() => navigation.push('Login')}>
+                <Font fontWeight="bold" fontSize={15} color={Colors.primary}>
                   GET STARTED
                 </Font>
               </TouchableOpacity>
