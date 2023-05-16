@@ -11,6 +11,7 @@ import {
 import Colors from '../../constants/Colors';
 
 import {Stack} from './Stack';
+import {Font} from './Text';
 
 if (
   Platform.OS === 'android' &&
@@ -41,11 +42,15 @@ export const Accordion = ({
         style={styles.header}>
         <Stack direction="row" alignItems="center" spacing={5}>
           <View style={styles.iconContainer}>
-            <View style={styles.icon} />
+            <View />
           </View>
-          <Text style={styles.title}>{title}</Text>
+          <Font fontWeight="bold" fontSize={16} color={Colors.background}>
+            {title}
+          </Font>
         </Stack>
-        <Text style={styles.icon}>{isExpanded ? '-' : '+'}</Text>
+        <Font fontSize={20} color={Colors.background}>
+          {isExpanded ? '-' : '+'}
+        </Font>
       </TouchableOpacity>
       {isExpanded && <View style={styles.body}>{children}</View>}
     </View>
@@ -70,11 +75,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: Colors.background,
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    color: Colors.background,
-  },
+
   iconContainer: {
     width: 28,
     height: 28,
@@ -82,9 +83,5 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  icon: {
-    fontSize: 20,
-    color: Colors.background,
   },
 });

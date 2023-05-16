@@ -66,7 +66,7 @@ const Test = () => {
       label: 'Accordian',
       component: (
         <Accordion title="hello">
-          <Text>hello this is boduy</Text>
+          <Font>hello this is boduy</Font>
         </Accordion>
       ),
     },

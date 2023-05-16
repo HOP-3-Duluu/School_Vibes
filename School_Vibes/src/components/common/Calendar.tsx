@@ -74,14 +74,14 @@ export const Calendar = () => {
                 styles.calendarDayDisabled,
             ]}
             onPress={() => handleDayPress(day)}>
-            <Text
+            <Font
               style={[
                 styles.calendarDayText,
                 isToday(day) && styles.calendarDayToday,
                 isDaySelected(day) && styles.calendarDaySelected,
               ]}>
               {day.date()}
-            </Text>
+            </Font>
           </TouchableOpacity>
         ))}
       </Stack>
