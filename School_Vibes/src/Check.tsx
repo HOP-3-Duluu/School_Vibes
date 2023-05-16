@@ -1,18 +1,28 @@
 import React from 'react';
+
+import {Text, SafeAreaView, ScrollView, View, Pressable} from 'react-native';
+
+import {useNavigation} from '@react-navigation/native';
 import {
   Button,
   Calendar,
   Font,
+  Margin,
+  Padding,
   Paper,
   ProgressBar,
+  Stack,
   Tabs,
-  TaskBox,
+  TaskBox, 
+  Accordion, 
+  StatisticBox
 } from './components';
-import {Text, SafeAreaView, ScrollView, View, Pressable} from 'react-native';
-import {Accordion} from './components';
+
+import FontSize from './constants/FontSize';
+
 import {Plus} from './assets';
 import Colors from './constants/Colors';
-import {useNavigation} from '@react-navigation/native';
+// import
 const Test = () => {
   const navigation = useNavigation<any>();
   const handlePress = () => {
@@ -58,6 +68,7 @@ const Test = () => {
             deadline="4-13"
             groupname="ulaan zagalmai"
           />
+          <StatisticBox Progress={77} AddedTaskToday={5} TasksToDo={5} DoneTasks={4}/>
         </View>
       ),
     },

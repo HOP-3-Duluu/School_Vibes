@@ -6,3 +6,4 @@ export * from './Home';
 export * from './Profile';
 export * from './Calendar';
 export * from './Task';
+export * from './Correct'
