@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Font, StatisticBox, Margin, Stack} from '../components';
+import {Font, StatisticBox, Margin, Stack, TickBox} from '../components';
 import Spacing from '../constants/Spacing';
 
 export const Home = () => {
@@ -24,7 +24,43 @@ export const Home = () => {
       end: 23,
     },
   ];
+  const tickBoxData = [
+    {
+      id: '1',
+      title: 'Mathematics',
+      header: 'Introduction',
+      chapter: 1,
+      userName: 'Brooklyn Williamson',
+    },
+    {
+      id: '2',
+      title: 'Physics',
+      header: 'Basic Concepts',
+      chapter: 3,
+      userName: 'Ethan Parker',
+    },
+    {
+      id: '3',
+      title: 'Chemistry',
+      header: 'Chemical Reactions',
+      chapter: 2,
+      userName: 'Olivia Evans',
+    },
+    // Add more items as needed
+  ];
 
+  const renderItemTick = ({item}) => {
+    return (
+      <Margin top={10}>
+        <TickBox
+          title={item.title}
+          header={item.header}
+          chapter={item.chapter}
+          userName={item.userName}
+        />
+      </Margin>
+    );
+  };
   const groupData = [
     {id: '1', name: 'Group1'},
     {id: '2', name: 'Group2'},
@@ -73,11 +109,11 @@ export const Home = () => {
         </Font>
         <Margin top={10} />
         <FlatList
+          data={groupData}
+          renderItem={renderItem}
           decelerationRate="fast"
           snapToInterval={Spacing}
           showsHorizontalScrollIndicator={false}
-          data={groupData}
-          renderItem={renderItem}
           keyExtractor={item => item.id}
           horizontal
         />
@@ -85,6 +121,18 @@ export const Home = () => {
         <Font fontWeight="bold" fontSize={25}>
           Tasks Today
         </Font>
+        <FlatList
+          decelerationRate="fast"
+          data={tickBoxData}
+          renderItem={renderItemTick}
+          snapToInterval={Spacing}
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
       </SafeAreaView>
     </ScrollView>
   );
