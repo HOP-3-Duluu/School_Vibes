@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {View, StyleProp, ViewStyle} from 'react-native';
 
 interface MarginProps {
-  children: ReactNode;
+  children?: ReactNode;
   all?: number;
   right?: number;
   left?: number;

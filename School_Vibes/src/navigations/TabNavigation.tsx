@@ -3,8 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeIcon, ProfileIcon, CalendarIcon, TaskIcon} from '../assets';
 import Colors from '../constants/Colors';
 import {Calendar} from '../components';
-import Test from '../Check';
-import {Profile, Task} from '../screens';
+import {Profile, Task, Home} from '../screens';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -17,7 +16,7 @@ const TabArr = [
     icon: ({focused}: any) => (
       <HomeIcon color={focused ? Colors.background : Colors.primary} />
     ),
-    component: Test,
+    component: Home,
   },
   {
     route: 'Task',
