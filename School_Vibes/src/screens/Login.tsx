@@ -26,7 +26,7 @@ export const Login = ({navigation}: RootStackScreenProps<'General'>) => {
           {backgroundColor: theme.colors.card, minHeight: dimensions.height},
         ]}>
         <View style={styles.centerContainer}>
-          <Artwork03 width={240} height={240} />
+          <Artwork03 width={240} height={dimensions.height / 3} />
         </View>
 
         <View style={styles.contentContainer}>
