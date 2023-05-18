@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Font, StatisticBox, Margin, Stack, TickBox} from '../components';
+import {Font, StatisticBox, Margin, Stack, TickBox , GroupBox} from '../components';
 import Spacing from '../constants/Spacing';
 
 export const Home = () => {
@@ -103,6 +103,7 @@ export const Home = () => {
           TasksToDo={5}
           DoneTasks={4}
         />
+        <GroupBox GroupName='11-4' Percentage={77} Description='11-4 angiin daalgavriin group' Date='8:14'/>
         <Margin top={20} />
         <Font fontWeight="bold" fontSize={25}>
           Groups

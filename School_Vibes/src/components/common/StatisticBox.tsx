@@ -11,7 +11,7 @@ import {
 import {CorrectIcon} from '../../assets/icon';
 import {Font, Padding, Margin, Stack} from '../core';
 import {now} from 'moment';
-import Test from '../../Check';
+
 import CircularProgress from 'react-native-circular-progress-indicator';
 import Colors from '../../constants/Colors';
 import FontSize from '../../constants/FontSize';
