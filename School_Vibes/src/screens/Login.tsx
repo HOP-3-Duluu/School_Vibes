@@ -7,16 +7,16 @@ import {
   StyleSheet,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useTheme} from '@react-navigation/native';
-import {RootStackScreenProps} from '../interfaces';
+import {useNavigation, useTheme} from '@react-navigation/native';
 import Artwork03 from '../assets/images/ArtWork';
 import {Button, Input} from '../components';
 import Colors from '../constants/Colors';
 import {Email, Password} from '../assets';
 
-export const Login = ({navigation}: RootStackScreenProps<'General'>) => {
+export const Login = () => {
   const theme = useTheme();
   const dimensions = useWindowDimensions();
+  const navigation = useNavigation();
 
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>

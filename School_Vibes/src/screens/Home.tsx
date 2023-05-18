@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -49,10 +49,11 @@ export const Home = () => {
     // Add more items as needed
   ];
 
-  const renderItemTick = ({item}) => {
+  const renderItemTick = ({item, navigation}) => {
     return (
       <Margin top={10}>
         <TickBox
+          onPress={() => navigation.push('LessonDetail')}
           title={item.title}
           header={item.header}
           chapter={item.chapter}
@@ -94,7 +95,9 @@ export const Home = () => {
       <SafeAreaView>
         <Stack direction="row" justifyContent="space-between">
           <Font>Good morning</Font>
-          <Font>Notification</Font>
+          <Pressable onPress={() => navigation.push('Notifications')}>
+            <Font>Notification</Font>
+          </Pressable>
           <Font>Profile</Font>
         </Stack>
         <StatisticBox
