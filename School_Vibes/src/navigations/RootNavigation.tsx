@@ -6,7 +6,7 @@ import {
   LessonDetail,
   Welcome,
   Login,
-  RegisterScreen,
+  Notifications,
 } from '../screens';
 import {TabNavigation} from './TabNavigation';
 const Stack = createNativeStackNavigator();
@@ -39,7 +39,7 @@ export const RootNavigation = () => {
         component={Login}
         options={{headerShown: false}}
       />
-
+      <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen
         name="General"
         component={TabNavigation}
