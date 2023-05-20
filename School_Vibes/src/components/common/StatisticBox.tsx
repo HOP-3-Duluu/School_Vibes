@@ -16,20 +16,17 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import Colors from '../../constants/Colors';
 import FontSize from '../../constants/FontSize';
 
-
-
-
 interface TaskBoxProps {
   AddedTaskToday: number;
   TasksToDo: number;
   DoneTasks: number;
-  Progress: number
+  Progress: number;
 }
 export const StatisticBox = ({
   AddedTaskToday,
   TasksToDo,
   DoneTasks,
-  Progress
+  Progress,
 }: TaskBoxProps) => {
   return (
     <View style={styles.container}>
@@ -41,16 +38,16 @@ export const StatisticBox = ({
           <Stack direction="column" spacing={20}>
             <Font style={{opacity: 0.5}}>Daily Tasks</Font>
             <Stack direction="column" spacing={10}>
-              <Stack direction="row" alignItems='center' spacing={7}>
-                <CorrectIcon/>
-        
+              <Stack direction="row" alignItems="center" spacing={7}>
+                <CorrectIcon />
+
                 <Font fontWeight="500" fontSize={FontSize.medium}>
                   {DoneTasks}/{TasksToDo} Task Today
                 </Font>
               </Stack>
 
-              <Stack direction="row"  alignItems='center' spacing={7}>
-              <CorrectIcon/>
+              <Stack direction="row" alignItems="center" spacing={7}>
+                <CorrectIcon />
 
                 <Font fontWeight="500" fontSize={FontSize.medium}>
                   {AddedTaskToday} Task added today
@@ -93,7 +90,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     backgroundColor: 'white',
     borderRadius: 15,
-
   },
   circle: {
     width: 90,

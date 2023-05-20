@@ -10,6 +10,7 @@ import {
 import {CalendarIcon} from '../../assets';
 import {Font, Margin} from '../core';
 import {useNavigation} from '@react-navigation/native';
+import {currentDate, dayName, monthName} from '../../library/Date';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
 const widthBaseScale = SCREEN_WIDTH / 375;
@@ -59,12 +60,12 @@ export const TaskBox = ({
     'December',
   ];
   let data: any = {
-    date: now.getDate(),
+    date: currentDate,
     month: now.getMonth() + 1,
     givenMonth: Number(deadline.split(':')[0]),
     givenDay: Number(deadline.split(':')[1]),
-    daybyname: days[now.getDay()],
-    monthbyname: months[now.getMonth()],
+    daybyname: dayName,
+    monthbyname: monthName,
     color: [0, 255, 0],
   };
   let dayDiff = (data.givenMonth - data.month) * 30 + data.givenDay - data.date;
