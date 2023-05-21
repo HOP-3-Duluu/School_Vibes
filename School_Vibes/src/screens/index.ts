@@ -6,5 +6,5 @@ export * from './LessonDetail';
 export * from './Login';
 export * from './Profile';
 export * from './Home';
-export * from './Add';
 export * from './Notifications';
+export * from './AddScreen';

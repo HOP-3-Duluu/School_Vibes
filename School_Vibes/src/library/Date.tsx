@@ -21,4 +21,13 @@ const monthName = months[monthIndex];
 const dayWeek = currentDate.getDay();
 const dayName = daysOfWeek[dayWeek];
 
-export {currentDate, day, year, monthName, dayWeek, dayName};
+export {
+  currentDate,
+  day,
+  year,
+  monthName,
+  dayWeek,
+  dayName,
+  daysOfWeek,
+  months,
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import {Font, Margin, Stack} from '../core';
+import {Font, Margin, Paper, Stack} from '../core';
 import Colors from '../../constants/Colors';
 import {ProfileIcon} from '../../assets';
 import MoreIcon from '../../assets/icon/More';
@@ -27,7 +27,7 @@ export const TickBox = ({title, chapter, userName, header}: any) => {
       onPress={changeState}
       style={{
         width: 280,
-        backgroundColor: state ? '#8ECAE6' : '#fefefe',
+        backgroundColor: state ? '#8ECAE6' : '#f6f6f5',
         borderRadius: 15,
       }}>
       <TouchableOpacity
