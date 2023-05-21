@@ -1,29 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
+  Pressable,
+  FlatList,
   SafeAreaView,
   ScrollView,
-  View,
-  Pressable,
   StyleSheet,
-  FlatList,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Font, StatisticBox, Margin, Stack, TickBox} from '../components';
+import {Font, Margin, Stack, TickBox, StatisticBox} from '../components';
 import Spacing from '../constants/Spacing';
 
 export const Home = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
 
   const timeData = [
-    {
-      start: 10,
-      end: 12,
-    },
-    {
-      start: 15,
-      end: 23,
-    },
+    {start: 10, end: 12},
+    {start: 15, end: 23},
   ];
+
   const tickBoxData = [
     {
       id: '1',
@@ -49,19 +43,6 @@ export const Home = () => {
     // Add more items as needed
   ];
 
-  const renderItemTick = ({item, navigation}) => {
-    return (
-      <Margin top={10}>
-        <TickBox
-          onPress={() => navigation.push('LessonDetail')}
-          title={item.title}
-          header={item.header}
-          chapter={item.chapter}
-          userName={item.userName}
-        />
-      </Margin>
-    );
-  };
   const groupData = [
     {id: '1', name: 'Group1'},
     {id: '2', name: 'Group2'},
@@ -70,28 +51,20 @@ export const Home = () => {
     {id: '5', name: 'Group5'},
   ];
 
-  const renderItem = ({item}) => {
-    return (
-      <Stack
-        justifyContent="center"
-        alignItems="center"
-        style={{
-          width: 300,
-          height: 150,
-          borderWidth: 1,
-          borderRadius: 20,
-          marginRight: 2 * Spacing,
-        }}>
-        <Pressable
-          onPress={() => navigation.push('GroupDetail', {name: item.name})}>
-          <Font>{item.name}</Font>
-        </Pressable>
-      </Stack>
-    );
-  };
+  const renderItem = ({item}) => (
+    <Stack
+      justifyContent="center"
+      alignItems="center"
+      style={styles.renderItem}>
+      <Pressable
+        onPress={() => navigation.push('GroupDetail', {name: item.name})}>
+        <Font>{item.name}</Font>
+      </Pressable>
+    </Stack>
+  );
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <SafeAreaView>
         <Stack direction="row" justifyContent="space-between">
           <Font>Good morning</Font>
@@ -124,19 +97,27 @@ export const Home = () => {
         <Font fontWeight="bold" fontSize={25}>
           Tasks Today
         </Font>
-        <FlatList
-          decelerationRate="fast"
-          data={tickBoxData}
-          renderItem={renderItemTick}
-          snapToInterval={Spacing}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={item => item.id}
-          contentContainerStyle={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
+        {tickBoxData.map((item, _index) => (
+          <Margin top={10} key={item.id}>
+            <TickBox
+              onPress={() => navigation.push('LessonDetail')}
+              title={item.title}
+              header={item.header}
+              chapter={item.chapter}
+              userName={item.userName}
+            />
+          </Margin>
+        ))}
       </SafeAreaView>
     </ScrollView>
   );
 };
+const styles = StyleSheet.create({
+  renderItem: {
+    width: 300,
+    height: 150,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginRight: 2 * Spacing,
+  },
+});

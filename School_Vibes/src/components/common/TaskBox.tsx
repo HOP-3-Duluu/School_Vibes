@@ -36,29 +36,7 @@ export const TaskBox = ({
 }: TaskBoxProps) => {
   let now = new Date();
   const navigation = useNavigation();
-  let days = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-  ];
-  let months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+
   let data: any = {
     date: currentDate,
     month: now.getMonth() + 1,
@@ -92,14 +70,12 @@ export const TaskBox = ({
             <Font style={{padding: norm(7)}}>{priority}</Font>
           </View>
         </View>
-        {/* title */}
         <Pressable
           onPress={() => navigation.push('LessonDetail', {owner: 'Michaś'})}>
           <Font fontSize={norm(20)} fontWeight="600">
             {title}
           </Font>
         </Pressable>
-        {/* bottom line */}
         <Margin top={norm(10)}>
           <View style={{...styles.row, ...styles.center, ...styles.between}}>
             <Font style={{opacity: 0.5, display: 'flex'}} fontSize={norm(14)}>

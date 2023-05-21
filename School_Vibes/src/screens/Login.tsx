@@ -1,7 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
-  Text,
   KeyboardAvoidingView,
   useWindowDimensions,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useTheme} from '@react-navigation/native';
 import Artwork03 from '../assets/images/ArtWork';
-import {Button, Input} from '../components';
+import {Button, Font, Input, Margin} from '../components';
 import Colors from '../constants/Colors';
 import {Email, Password} from '../assets';
 
@@ -30,11 +30,14 @@ export const Login = () => {
         </View>
 
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Let's{'\n'}Get Started</Text>
-          <Text style={styles.subtitle}>
-            To register for an account, kindly enter your details
-          </Text>
-
+          <Font fontSize={40} fontWeight="800" color={Colors.primary}>
+            Let's{'\n'}Get Started
+          </Font>
+          <Margin top={16}>
+            <Font fontSize={16} color={Colors.primary} style={{opacity: 0.5}}>
+              To register for an account, kindly enter your details
+            </Font>
+          </Margin>
           <View style={styles.inputContainer}>
             <View style={styles.inputWrapper}>
               <Input
@@ -85,17 +88,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     padding: 24,
   },
-  title: {
-    fontSize: 40,
-    fontWeight: '800',
-    color: Colors.primary,
-  },
-  subtitle: {
-    opacity: 0.5,
-    marginTop: 16,
-    fontSize: 16,
-    color: Colors.primary,
-  },
+
   inputContainer: {
     alignItems: 'center',
     marginTop: 32,

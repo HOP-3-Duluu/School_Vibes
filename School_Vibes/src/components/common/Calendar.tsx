@@ -11,7 +11,7 @@ import {Filter} from '../../assets';
 
 export const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(moment());
-  const [selectedDay, setSelectedDay] = useState<any>(null);
+  const [selectedDay, setSelectedDay] = useState<any>(moment());
 
   const handleDayClick = day => {
     setSelectedDay(day);
