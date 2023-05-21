@@ -10,3 +10,4 @@ export * from './Correct';
 export * from './Password';
 export * from './Email';
 export * from './Correct';
+export * from './Filter';

@@ -111,6 +111,7 @@ export const TabNavigation = () => {
             name={item.route}
             component={item.component}
             options={{
+              headerShown: false,
               tabBarShowLabel: false,
               tabBarButton: props => <TabButton {...props} item={item} />,
             }}

@@ -26,7 +26,9 @@ export const Stack = ({
   ];
 
   const childContainerStyle =
-    direction === 'column' ? {marginBottom: spacing} : {marginRight: spacing};
+    direction === 'column'
+      ? {marginBottom: spacing}
+      : {marginRight: spacing / 2, marginLeft: spacing / 2};
 
   return (
     <View style={containerStyle}>

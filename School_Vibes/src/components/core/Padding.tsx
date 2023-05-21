@@ -6,7 +6,7 @@ interface PaddingProps {
   all?: number;
   right?: number;
   left?: number;
-  Top?: number;
+  top?: number;
   bottom?: number;
   horizontal?: number;
   vertical?: number;
@@ -18,7 +18,7 @@ export const Padding = ({
   all,
   left,
   right,
-  Top,
+  top,
   bottom,
   style,
   horizontal,
@@ -28,7 +28,7 @@ export const Padding = ({
     {
       marginLeft: left || horizontal || all || 0,
       marginRight: right || horizontal || all || 0,
-      marginTop: Top || vertical || all || 0,
+      marginTop: top || vertical || all || 0,
       marginBottom: bottom || vertical || all || 0,
     },
     style,
