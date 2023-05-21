@@ -1,18 +1,11 @@
 import React from 'react';
-import {
-  Dimensions,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Calendar, Font, Margin, Padding, Stack} from '../components';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import {day, dayName, monthName, year} from '../library/Date';
 
 export const Task = () => {
-  const height = Dimensions.get('screen').height;
   return (
     <SafeAreaView>
       <Padding horizontal={Spacing} top={Spacing}>

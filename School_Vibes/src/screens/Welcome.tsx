@@ -17,7 +17,7 @@ import Colors from '../constants/Colors';
 const {width, height} = Dimensions.get('window');
 
 interface SlideItem {
-  id: string;
+  id: number;
   image: any;
   title: string;
   subtitle: string;
@@ -27,21 +27,21 @@ interface SlideProps {
   item: SlideItem;
 }
 
-const slides: SlideProps[] = [
+const slides: SlideItem[] = [
   {
-    id: '1',
+    id: 1,
     image: require('../assets/images/onBoarding1.png'),
     title: 'Best Digital Solution',
     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   },
   {
-    id: '2',
+    id: 2,
     image: require('../assets/images/onBoarding2.png'),
     title: 'Achieve Your Goals',
     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   },
   {
-    id: '3',
+    id: 3,
     image: require('../assets/images/onBoarding3.png'),
     title: 'Increase Your Value',
     subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -117,7 +117,7 @@ export const Welcome: FC<{navigation: any}> = ({navigation}) => {
           <Stack direction="row" justifyContent="center">
             {slides.map((_, index) => (
               <View
-                key={index}
+                key={index + 1}
                 style={[
                   styles.indicator,
                   currentSlideIndex === index && {
@@ -184,6 +184,7 @@ export const Welcome: FC<{navigation: any}> = ({navigation}) => {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={slides}
+        keyExtractor={(item, index) => index.toString()}
         pagingEnabled
         renderItem={({item}) => <Slide item={item} />}
       />
