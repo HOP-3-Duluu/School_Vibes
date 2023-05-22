@@ -1,5 +1,3 @@
-export * from './BulletLeft';
-export * from './BulletRight';
 export * from './Plus';
 export * from './Clock';
 export * from './Home';
@@ -11,3 +9,7 @@ export * from './Password';
 export * from './Email';
 export * from './Correct';
 export * from './Filter';
+export * from './Right';
+export * from './Left';
+export * from './Attachment';
+export * from './Close';

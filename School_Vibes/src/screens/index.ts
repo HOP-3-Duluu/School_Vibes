@@ -8,3 +8,4 @@ export * from './Profile';
 export * from './Home';
 export * from './Notifications';
 export * from './AddScreen';
+export * from './JoinScreen';

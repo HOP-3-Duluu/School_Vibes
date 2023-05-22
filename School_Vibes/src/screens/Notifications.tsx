@@ -271,7 +271,7 @@ export const Notifications = ({navigation}: any) => {
   );
 
   return (
-    <Padding all={20}>
+    <Padding horizontal={20}>
       <View style={{height: '100%'}}>
         <SectionList
           sections={groupedData}
