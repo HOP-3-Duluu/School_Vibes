@@ -7,6 +7,7 @@ import {
   Welcome,
   Login,
   Notifications,
+  AddScreen,
 } from '../screens';
 import {TabNavigation} from './TabNavigation';
 const Stack = createNativeStackNavigator();
@@ -27,7 +28,7 @@ export const RootNavigation = () => {
 
   return (
     <Stack.Navigator>
-      {isAppFirstLaunched && (
+      {/* {isAppFirstLaunched && (
         <Stack.Screen
           name="OnboardingScreen"
           component={Welcome}
@@ -42,6 +43,11 @@ export const RootNavigation = () => {
       <Stack.Screen
         name="General"
         component={TabNavigation}
+        options={{headerShown: false}}
+      /> */}
+      <Stack.Screen
+        name="Add"
+        component={AddScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen name="Notifications" component={Notifications} />

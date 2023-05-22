@@ -1,11 +1,19 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Calendar, Font, Margin, Padding, Stack} from '../components';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 import {day, dayName, monthName, year} from '../library/Date';
 
 export const Task = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
       <Padding horizontal={Spacing} top={Spacing}>
@@ -43,13 +51,15 @@ export const Task = () => {
               </Stack>
             </View>
           </Stack>
-          <Pressable style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.push('Add')}>
             <Padding all={13} horizontal={25}>
               <Font color={Colors.primary} fontWeight="bold" fontSize={20}>
-                Today
+                ADD TASK
               </Font>
             </Padding>
-          </Pressable>
+          </TouchableOpacity>
         </Stack>
       </Padding>
       <Margin top={Spacing * 3}>
@@ -67,3 +77,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+//https://www.npmjs.com/package/react-native-modal-selector-searchable/v/2.1.1

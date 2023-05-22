@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeIcon, ProfileIcon, CalendarIcon, TaskIcon} from '../assets';
 import Colors from '../constants/Colors';
-import {Profile, Task, Home, AddScreen} from '../screens';
+import {Profile, Task, Home, AddScreen, JoinScreen} from '../screens';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -26,12 +26,12 @@ const TabArr = [
     component: Task,
   },
   {
-    route: 'Add',
-    label: 'Add',
+    route: 'Join',
+    label: 'Join',
     icon: ({focused}: any) => (
       <CalendarIcon color={focused ? Colors.background : Colors.primary} />
     ),
-    component: AddScreen,
+    component: JoinScreen,
   },
   {
     route: 'Profile',

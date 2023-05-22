@@ -38,8 +38,9 @@ export const NotificationCard = ({
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="center">
       {/* <Image source={{uri: groupImage}} /> */}
-      <Stack direction="row" alignItems="center" spacing={10}>
+      <Stack direction="row" alignItems="center">
         <View style={styles.image} />
+        <Margin left={10} />
         <Stack>
           <Font fontSize={15}>
             <Font fontWeight="bold" fontSize={15}>
@@ -73,3 +74,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
 });
+
+// diff "${PODS_PODFILE_DIR_PATH}/Podfile.lock" "${PODS_ROOT}/Manifest.lock" > /dev/null
+// if [ $? != 0 ] ; then
+//     # print error to STDERR
+//     echo "error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation." >&2
+//     exit 1
+// fi
+// # This output is used by Xcode 'outputs' to avoid re-running this script phase.
+// echo "SUCCESS" > "${SCRIPT_OUTPUT_FILE_0}"
