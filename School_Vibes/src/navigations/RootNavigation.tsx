@@ -44,7 +44,7 @@ export const RootNavigation = () => {
         name="General"
         component={TabNavigation}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="Add"
         component={AddScreen}

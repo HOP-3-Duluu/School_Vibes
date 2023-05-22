@@ -24,6 +24,9 @@ end
 
 
 target 'School_Vibes' do
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-LocationAlways', :path => "#{permissions_path}/LocationAlways/Permission-LocationAlways.podspec"
+  pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse/Permission-LocationWhenInUse.podspec"
   config = use_native_modules!
 
   # Flags change depending on the env values.
