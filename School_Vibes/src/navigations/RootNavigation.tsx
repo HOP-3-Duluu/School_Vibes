@@ -28,7 +28,7 @@ export const RootNavigation = () => {
 
   return (
     <Stack.Navigator>
-      {/* {isAppFirstLaunched && (
+      {isAppFirstLaunched && (
         <Stack.Screen
           name="OnboardingScreen"
           component={Welcome}
@@ -44,15 +44,23 @@ export const RootNavigation = () => {
         name="General"
         component={TabNavigation}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="Add"
         component={AddScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="GroupDetail" component={GroupDetail} />
-      <Stack.Screen name="LessonDetail" component={LessonDetail} />
+      <Stack.Screen
+        name="GroupDetail"
+        component={GroupDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LessonDetail"
+        component={LessonDetail}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
