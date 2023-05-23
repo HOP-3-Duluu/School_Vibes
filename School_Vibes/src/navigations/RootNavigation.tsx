@@ -51,8 +51,16 @@ export const RootNavigation = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="GroupDetail" component={GroupDetail} />
-      <Stack.Screen name="LessonDetail" component={LessonDetail} />
+      <Stack.Screen
+        name="GroupDetail"
+        component={GroupDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="LessonDetail"
+        component={LessonDetail}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
