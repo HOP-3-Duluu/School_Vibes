@@ -1,6 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Font, Margin, Stack} from '../core';
+import {Font, Margin, Padding, Paper, Stack} from '../core';
 import {Clock} from '../../assets';
 import Colors from '../../constants/Colors';
 
@@ -17,56 +17,58 @@ export const ProgressBar = ({
   progress: any;
 }) => {
   return (
-    <View>
-      <Font fontWeight="bold" fontSize={24}>
-        Ofspace project
-      </Font>
-      <Margin top={10} bottom={3}>
-        {time?.map(({start, end}: dataProps, index: number) => {
-          return (
-            <View key={index + end}>
-              <Time start={start} end={end} />
-            </View>
-          );
-        })}
-      </Margin>
-
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Font fontWeight="600" fontSize={24}>
-          Overall Activity
+    <Paper>
+      <Padding all={16}>
+        <Font fontWeight="bold" fontSize={24}>
+          Ofspace project
         </Font>
-        <TouchableOpacity>
-          <Stack direction="row" spacing={0.1}>
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-          </Stack>
-        </TouchableOpacity>
-      </Stack>
-      <Margin top={20}>
-        <Stack spacing={10} width="100%">
-          <Stack direction="row" spacing={10}>
-            <Font>
-              Done : {Math.round((progress.done / progress.all) * 100)}%
-            </Font>
-            <Font>
-              In progress :{' '}
-              {Math.round((progress.progress / progress.all) * 100)}%
-            </Font>
-            <Font>
-              Todo : {Math.round((progress.todo / progress.all) * 100)}%
-            </Font>
-            <Font>All : 100%</Font>
-          </Stack>
+        <Margin top={10} bottom={3}>
+          {time?.map(({start, end}: dataProps, index: number) => {
+            return (
+              <View key={index + end}>
+                <Time start={start} end={end} />
+              </View>
+            );
+          })}
+        </Margin>
 
-          <Stack direction="row" justifyContent="space-between">
-            <Type type={'Done'} />
-            <Type type={'ToDo'} />
-            <Type type={'Progress'} />
-          </Stack>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between">
+          <Font fontWeight="600" fontSize={24}>
+            Overall Activity
+          </Font>
+          <TouchableOpacity>
+            <Stack direction="row" spacing={0.1}>
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+            </Stack>
+          </TouchableOpacity>
         </Stack>
-      </Margin>
-    </View>
+        <Margin top={20}>
+          <Stack spacing={10} width="100%">
+            <Stack direction="row" spacing={10}>
+              <Font>
+                Done : {Math.round((progress.done / progress.all) * 100)}%
+              </Font>
+
+              <Font>
+                Todo : {Math.round((progress.todo / progress.all) * 100)}%
+              </Font>
+              <Font>All : 100%</Font>
+            </Stack>
+
+            <Stack direction="row" justifyContent="space-between">
+              <Type type={'Done'} />
+              <Type type={'ToDo'} />
+              <Type type={'All'} />
+            </Stack>
+          </Stack>
+        </Margin>
+      </Padding>
+    </Paper>
   );
 };
 
@@ -119,7 +121,7 @@ const Time = ({start, end}: TimeProps) => {
 };
 
 interface TypeProps {
-  type: 'Done' | 'Progress' | 'ToDo';
+  type: 'Done' | 'All' | 'ToDo';
 }
 
 const Type = ({type}: TypeProps) => {

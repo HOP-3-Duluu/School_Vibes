@@ -1,12 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import moment from 'moment';
+import React, {useState} from 'react';
+import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Calendar, Font, Margin, Padding, Stack} from '../components';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
@@ -14,14 +9,22 @@ import {day, dayName, monthName, year} from '../library/Date';
 
 export const Task = () => {
   const navigation = useNavigation();
+  const [selectedDay, setSelectedDay] = useState<any>(moment());
+
+  const handleDayClick = day => {
+    setSelectedDay(day);
+  };
+
   return (
     <SafeAreaView>
       <Padding horizontal={Spacing} top={Spacing}>
         <Stack direction="row" justifyContent="space-between">
           <Stack direction="row" alignItems="center" spacing={Spacing}>
-            <Font fontWeight="bold" fontSize={42}>
-              {day}
-            </Font>
+            <TouchableOpacity onPress={() => setSelectedDay(moment())}>
+              <Font fontWeight="bold" fontSize={42}>
+                {day}
+              </Font>
+            </TouchableOpacity>
             <View>
               <Margin left={Spacing / 4}>
                 <Font
@@ -64,7 +67,7 @@ export const Task = () => {
       </Padding>
       <Margin top={Spacing * 3}>
         <View>
-          <Calendar />
+          <Calendar selectedDay={selectedDay} handleDayClick={handleDayClick} />
         </View>
       </Margin>
     </SafeAreaView>
@@ -78,4 +81,3 @@ const styles = StyleSheet.create({
   },
 });
 
-//https://www.npmjs.com/package/react-native-modal-selector-searchable/v/2.1.1

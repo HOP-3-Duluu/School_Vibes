@@ -1,8 +1,14 @@
 import React, {ReactNode} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 
-export const Paper = ({children}: {children: ReactNode}) => {
-  return <View style={styles.paper}>{children}</View>;
+export const Paper = ({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: any;
+}) => {
+  return <View style={[styles.paper, style]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -10,7 +16,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 4,
     elevation: 1,
-    padding: 16,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,

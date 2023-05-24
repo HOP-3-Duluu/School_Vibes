@@ -25,14 +25,14 @@ const TabArr = [
     ),
     component: Task,
   },
-  {
-    route: 'Join',
-    label: 'Join',
-    icon: ({focused}: any) => (
-      <CalendarIcon color={focused ? Colors.background : Colors.primary} />
-    ),
-    component: JoinScreen,
-  },
+  // {
+  //   route: 'Join',
+  //   label: 'Join',
+  //   icon: ({focused}: any) => (
+  //     <CalendarIcon color={focused ? Colors.background : Colors.primary} />
+  //   ),
+  //   component: JoinScreen,
+  // },
   {
     route: 'Profile',
     label: 'Profile',

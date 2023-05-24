@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useState} from 'react';
 import {useAsyncEffect} from '../hooks';
 import {
   GroupDetail,
@@ -16,6 +17,7 @@ export const RootNavigation = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState<
     boolean | null
   >(true);
+  const [isLogin, setLogin] = useState(false);
   useAsyncEffect(async () => {
     const appData = await AsyncStorage.getItem('isAppFirstLaunched');
     if (appData == null) {
@@ -35,11 +37,13 @@ export const RootNavigation = () => {
           options={{headerShown: false}}
         />
       )}
-      <Stack.Screen
-        name="Login"
-        component={Login}
-        options={{headerShown: false}}
-      />
+      {isLogin && (
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        />
+      )}
       <Stack.Screen
         name="General"
         component={TabNavigation}

@@ -23,7 +23,7 @@ export const TickBox = ({title, chapter, userName, header}: any) => {
   };
 
   return (
-    <View
+    <Paper
       style={{
         width: 280,
         backgroundColor: state ? '#8ECAE6' : '#f6f6f5',
@@ -100,6 +100,6 @@ export const TickBox = ({title, chapter, userName, header}: any) => {
           </View>
         </Stack>
       </Margin>
-    </View>
+    </Paper>
   );
 };

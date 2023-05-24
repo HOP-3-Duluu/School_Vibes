@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   SafeAreaView,
   ScrollView,
@@ -15,7 +16,15 @@ import * as Progress from 'react-native-progress';
 import {Dimensions} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {PERMISSIONS, request} from 'react-native-permissions';
-const Attachment = ({photo}) => {
+const Attachment = ({
+  photo,
+  index,
+  DeleteAttachment,
+}: {
+  photo: any;
+  DeleteAttachment: void;
+  index: number;
+}) => {
   return (
     <Margin top={Spacing * 2} bottom={Spacing}>
       <Stack direction="row" alignItems="center" justifyContent="space-between">
@@ -45,7 +54,18 @@ const Attachment = ({photo}) => {
           <Margin top={Spacing / 1.3} />
           <Progress.Bar progress={0.1} width={200} color={Colors.primary} />
         </Stack>
-        <TouchableOpacity style={styles.close}>
+        <TouchableOpacity
+          style={styles.close}
+          onPress={() =>
+            Alert.alert('Delete', 'Do you want delete it?', [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: 'OK', onPress: () => DeleteAttachment(index)},
+            ])
+          }>
           <Close />
         </TouchableOpacity>
       </Stack>
@@ -77,6 +97,13 @@ export const AddScreen = ({navigation}: any) => {
       throw error;
     }
   };
+
+  const DeleteAttachment = (id: number) => {
+    setPhoto((prev: any) =>
+      prev.filter((_el: any, index: number) => index != id),
+    );
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView
@@ -147,19 +174,28 @@ export const AddScreen = ({navigation}: any) => {
                 <Font fontWeight="bold" fontSize={16} color={Colors.gray}>
                   ATTACHMENTS
                 </Font>
-                <Margin top={Spacing * 1.5} />
+                <Margin top={Spacing / 2} />
                 <ScrollView
                   style={{height: 110}}
                   showsVerticalScrollIndicator={false}>
                   {photos.length != 0 ? (
-                    photos.map(photo => <Attachment photo={photo} />)
+                    photos.map((photo: any, index: number) => (
+                      <Attachment
+                        photo={photo}
+                        index={index}
+                        key={index}
+                        DeleteAttachment={DeleteAttachment}
+                      />
+                    ))
                   ) : (
                     <View>
                       <Font>Dont choose photo</Font>
                     </View>
                   )}
                 </ScrollView>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => Alert.alert('Created')}>
                   <Font
                     fontWeight="bold"
                     fontSize={18}

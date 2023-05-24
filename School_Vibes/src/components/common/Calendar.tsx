@@ -9,13 +9,8 @@ import {Time} from './Time';
 import Spacing from '../../constants/Spacing';
 import {Filter} from '../../assets';
 
-export const Calendar = () => {
+export const Calendar = ({selectedDay, handleDayClick}) => {
   const [selectedDate, setSelectedDate] = useState(moment());
-  const [selectedDay, setSelectedDay] = useState<any>(moment());
-
-  const handleDayClick = day => {
-    setSelectedDay(day);
-  };
 
   const renderCalendar = () => {
     const startOfCalendar = selectedDate.clone().subtract(3, 'days');
