@@ -1,8 +1,18 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Animated,
+} from 'react-native';
 import moment from 'moment';
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  State,
+} from 'react-native-gesture-handler';
 import Colors from '../../constants/Colors';
 import {Font, Margin, Padding, Stack} from '../core';
 import {Time} from './Time';
@@ -11,6 +21,49 @@ import {Filter} from '../../assets';
 
 export const Calendar = ({selectedDay, handleDayClick}) => {
   const [selectedDate, setSelectedDate] = useState(moment());
+  const position = useRef(new Animated.Value(0)).current;
+
+  const handleGestureEvent = Animated.event(
+    [{nativeEvent: {translationX: position}}],
+    {useNativeDriver: true},
+  );
+
+  const handleStateChange = ({nativeEvent}) => {
+    if (nativeEvent.state === State.END) {
+      if (nativeEvent.translationX > 100) {
+        handlePrevDay();
+      } else if (nativeEvent.translationX < -100) {
+        handleNextDay();
+      } else {
+        Animated.spring(position, {
+          toValue: 0,
+          useNativeDriver: true,
+        }).start();
+      }
+    }
+  };
+
+  const handleNextDay = () => {
+    setSelectedDate(selectedDate.clone().add(7, 'day'));
+    Animated.timing(position, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      position.setValue(0);
+    });
+  };
+
+  const handlePrevDay = () => {
+    setSelectedDate(selectedDate.clone().subtract(7, 'day'));
+    Animated.timing(position, {
+      toValue: -1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => {
+      position.setValue(0);
+    });
+  };
 
   const renderCalendar = () => {
     const startOfCalendar = selectedDate.clone().subtract(3, 'days');
@@ -26,42 +79,49 @@ export const Calendar = ({selectedDay, handleDayClick}) => {
 
     const isToday = day => day.isSame(moment(), 'day');
 
+    const translateX = position.interpolate({
+      inputRange: [-1, 0, 1],
+      outputRange: [-100, 0, 100],
+    });
+
     return (
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.calendarContainer}
-        data={calendarDays}
-        scrollEnabled={false}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={[
-              styles.calendarDay,
-              item.isSame(selectedDay, 'day') && styles.calendarDaySelected,
-            ]}
-            onPress={() => handleDayClick(item)}>
-            <Font
-              style={[
-                isToday(item) && styles.calendarDayToday,
-                item.isSame(selectedDay, 'day') &&
-                  styles.calendarDaySelectedText,
-              ]}
-              color="gray"
-              fontWeight="500">
-              {item.format('dddd').substring(0, 1)}
-            </Font>
-            <Font
-              style={
-                item.isSame(selectedDay, 'day') &&
-                styles.calendarDaySelectedText
-              }
-              fontWeight="bold">
-              {item.date()}
-            </Font>
-          </TouchableOpacity>
-        )}
-      />
+      <GestureHandlerRootView>
+        <PanGestureHandler
+          onGestureEvent={handleGestureEvent}
+          onHandlerStateChange={handleStateChange}>
+          <Animated.View
+            style={[styles.calendarContainer, {transform: [{translateX}]}]}>
+            {calendarDays.map(item => (
+              <TouchableOpacity
+                key={item.format('YYYY-MM-DD')}
+                style={[
+                  styles.calendarDay,
+                  item.isSame(selectedDay, 'day') && styles.calendarDaySelected,
+                ]}
+                onPress={() => handleDayClick(item)}>
+                <Font
+                  style={[
+                    isToday(item) && styles.calendarDayToday,
+                    item.isSame(selectedDay, 'day') &&
+                      styles.calendarDaySelectedText,
+                  ]}
+                  color="gray"
+                  fontWeight="500">
+                  {item.format('dddd').substring(0, 1)}
+                </Font>
+                <Font
+                  style={
+                    item.isSame(selectedDay, 'day') &&
+                    styles.calendarDaySelectedText
+                  }
+                  fontWeight="bold">
+                  {item.date()}
+                </Font>
+              </TouchableOpacity>
+            ))}
+          </Animated.View>
+        </PanGestureHandler>
+      </GestureHandlerRootView>
     );
   };
 
@@ -141,6 +201,7 @@ export const Calendar = ({selectedDay, handleDayClick}) => {
           paddingBottom: Spacing / 2,
         }}
       />
+
       <Margin top={Spacing}>
         <View>{renderSelectedDayComponent()}</View>
       </Margin>
@@ -172,7 +233,6 @@ const styles = StyleSheet.create({
     margin: 4,
     gap: 3,
   },
-
   calendarDayToday: {
     fontWeight: 'bold',
   },
