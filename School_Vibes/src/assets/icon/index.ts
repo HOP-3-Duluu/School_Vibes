@@ -14,3 +14,4 @@ export * from './Left';
 export * from './Attachment';
 export * from './Close';
 export * from './Notifications';
+export * from './Logo';
