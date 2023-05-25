@@ -8,7 +8,7 @@ import {useState} from 'react';
 import Trash from '../../assets/icon/Trash';
 import Edit from '../../assets/icon/Edit';
 
-export const TickBox = ({title, chapter, userName, header}: any) => {
+export const TickBox = ({title, chapter, userName, header, style}: any) => {
   const [state, setState] = useState(false);
   const [show, setDisplay] = useState('none');
   const changeState = () => {
@@ -24,11 +24,14 @@ export const TickBox = ({title, chapter, userName, header}: any) => {
 
   return (
     <Paper
-      style={{
-        width: 280,
-        backgroundColor: state ? '#8ECAE6' : '#f6f6f5',
-        borderRadius: 15,
-      }}>
+      style={[
+        {
+          width: 280,
+          backgroundColor: state ? '#8ECAE6' : Colors.light,
+          borderRadius: 15,
+        },
+        style,
+      ]}>
       <TouchableOpacity
         onPress={handleClick}
         style={{

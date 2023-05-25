@@ -5,41 +5,7 @@ import {Font, Margin, Stack} from '../core';
 import Colors from '../../constants/Colors';
 import Spacing from '../../constants/Spacing';
 
-export const Time = ({day}: {day: string}) => {
-  const data = [
-    {
-      id: 1,
-      title: 'Mathematics',
-      header: 'Introduction',
-      chapter: 1,
-      userName: 'Brooklyn Williamson',
-      time: day,
-    },
-    {
-      id: 2,
-      title: 'Mathematics',
-      header: 'Introduction',
-      chapter: 1,
-      userName: 'Brooklyn Williamson',
-      time: day,
-    },
-    {
-      id: 3,
-      title: 'Mathematics',
-      header: 'Introduction',
-      chapter: 1,
-      userName: 'Brooklyn Williamson',
-      time: day,
-    },
-    {
-      id: 4,
-      title: 'Mathematics',
-      header: 'Introduction',
-      chapter: 1,
-      userName: 'Brooklyn Williamson',
-      time: day,
-    },
-  ];
+export const Time = ({data}: {data: any}) => {
   interface DataProps {
     id: number;
     title: string;
@@ -53,7 +19,7 @@ export const Time = ({day}: {day: string}) => {
       <Stack direction="row" spacing={14}>
         <Margin top={Spacing / 2}>
           <Font fontWeight="bold" fontSize={18}>
-            {item?.time?.format()?.slice(11, 16)}
+            {item?.time?.slice(11, 16)}
           </Font>
         </Margin>
         <View style={styles.border} />

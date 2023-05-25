@@ -17,15 +17,16 @@ export const RootNavigation = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState<
     boolean | null
   >(true);
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState(true);
   useAsyncEffect(async () => {
     const appData = await AsyncStorage.getItem('isAppFirstLaunched');
-    if (appData == null) {
-      setIsAppFirstLaunched(true);
-      AsyncStorage.setItem('isAppFirstLaunched', 'false');
-    } else {
-      setIsAppFirstLaunched(false);
-    }
+    // console.log(appData);
+    // if (appData == null) {
+    //   setIsAppFirstLaunched(true);
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'false');
+    // } else {
+    //   setIsAppFirstLaunched(false);
+    // }
   }, []);
 
   return (

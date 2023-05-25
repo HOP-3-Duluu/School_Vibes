@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -11,6 +11,7 @@ import {Notification} from '../assets';
 import Logo from '../assets/images/Logo.png';
 import {Font, Stack} from '../components';
 import Colors from '../constants/Colors';
+import AnimatedLottieView from 'lottie-react-native';
 
 const Item = ({icon, text, router}) => {
   return (
@@ -36,6 +37,12 @@ const CircleImage = () => {
 };
 
 export const Profile = () => {
+  const animationRef = useRef<any>(null);
+  useEffect(() => {
+    animationRef.current?.play();
+    animationRef.current?.play(30, 120);
+  }, []);
+
   return (
     <Stack alignItems="center">
       <SafeAreaView>
@@ -57,6 +64,12 @@ export const Profile = () => {
           <Font>logout</Font>
           <Font>Create or join participate</Font>
         </Stack>
+        <AnimatedLottieView
+          ref={animationRef}
+          source={require('../animation/loadging.json')}
+          autoPlay
+          loop={true}
+        />
       </SafeAreaView>
     </Stack>
   );

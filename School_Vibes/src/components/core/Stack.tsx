@@ -8,7 +8,7 @@ type StackProps = {
   alignItems?: ViewStyle['alignItems'];
   justifyContent?: ViewStyle['justifyContent'];
   style?: ViewStyle;
-  width?: string;
+  width?: ViewStyle['width'];
 };
 
 export const Stack = ({

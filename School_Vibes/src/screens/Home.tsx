@@ -129,7 +129,7 @@ export const Home = () => {
             DoneTasks={4}
           />
         </Padding>
-        <Margin top={20} />
+        <Margin top={Spacing * 2} />
         <Padding left={15}>
           <Font fontWeight="bold" fontSize={25}>
             Groups
@@ -145,7 +145,7 @@ export const Home = () => {
             horizontal
           />
         </Padding>
-        <Margin top={20} />
+        <Margin top={Spacing * 2} />
         <Padding horizontal={20}>
           <Font fontWeight="bold" fontSize={25}>
             Tasks Today
@@ -153,6 +153,7 @@ export const Home = () => {
           {tickBoxData.map((item, _index) => (
             <Margin top={10} key={item.id}>
               <TickBox
+                style={{width: '100%'}}
                 onPress={() => navigation.push('LessonDetail')}
                 title={item.title}
                 header={item.header}
