@@ -2,6 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Plus} from '../assets';
 import {Calendar, Font, Margin, Padding, Stack} from '../components';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
@@ -57,10 +58,14 @@ export const Task = () => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.push('Add')}>
-            <Padding all={13} horizontal={25}>
-              <Font color={Colors.primary} fontWeight="bold" fontSize={20}>
-                ADD TASK
-              </Font>
+            <Padding all={13} horizontal={20}>
+              <Stack direction="row" alignItems="center" spacing={5}>
+                <Font color={Colors.primary} fontWeight="bold" fontSize={20}>
+                  ADD TASK
+                </Font>
+                <Margin left={3} />
+                <Plus fill={Colors.primary} />
+              </Stack>
             </Padding>
           </TouchableOpacity>
         </Stack>
@@ -80,4 +85,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-

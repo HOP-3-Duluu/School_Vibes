@@ -8,3 +8,4 @@ export * from './button';
 export * from './Paper';
 export * from './Tabs';
 export * from './Input';
+export * from './Modal';

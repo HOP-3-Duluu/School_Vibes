@@ -69,6 +69,40 @@ export const Calendar = ({selectedDay, handleDayClick}) => {
     if (!selectedDay) {
       return null;
     }
+    const data = [
+      {
+        id: 1,
+        title: 'Mathematics',
+        header: 'Introduction',
+        chapter: 1,
+        userName: 'Brooklyn Williamson',
+        time: '2023-05-25T00:46:05.676Z',
+      },
+      {
+        id: 2,
+        title: 'Mathematics',
+        header: 'Introduction',
+        chapter: 1,
+        userName: 'Brooklyn Williamson',
+        time: '2023-05-25T00:46:05.676Z',
+      },
+      {
+        id: 3,
+        title: 'Mathematics',
+        header: 'Introduction',
+        chapter: 1,
+        userName: 'Brooklyn Williamson',
+        time: '2023-05-25T08:46:05.676Z',
+      },
+      {
+        id: 4,
+        title: 'Mathematics',
+        header: 'Introduction',
+        chapter: 1,
+        userName: 'Brooklyn Williamson',
+        time: '2023-05-25T00:46:05.676Z',
+      },
+    ];
     return (
       <Stack alignItems="center">
         <Margin top={10}>
@@ -91,7 +125,7 @@ export const Calendar = ({selectedDay, handleDayClick}) => {
               </Margin>
             </Stack>
           </Padding>
-          <Time day={selectedDay} />
+          <Time data={data} />
         </Margin>
       </Stack>
     );

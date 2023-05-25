@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {CorrectIcon} from '../../assets/icon';
-import {Font, Padding, Margin, Stack} from '../core';
+import {Font, Padding, Margin, Stack, Paper} from '../core';
 import {now} from 'moment';
 import Test from '../../Check';
 import CircularProgress from 'react-native-circular-progress-indicator';
@@ -29,7 +29,7 @@ export const StatisticBox = ({
   Progress,
 }: TaskBoxProps) => {
   return (
-    <View style={styles.container}>
+    <Paper style={styles.container}>
       <Margin all={20}>
         <Stack
           style={{width: '100%'}}
@@ -78,16 +78,16 @@ export const StatisticBox = ({
           </Stack>
         </Stack>
       </Margin>
-    </View>
+    </Paper>
   );
 };
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 150,
-    shadowColor: 'black',
-    shadowOffset: {width: 3, height: 5},
-    shadowOpacity: 0.15,
+    // shadowColor: 'black',
+    // shadowOffset: {width: 3, height: 5},
+    // shadowOpacity: 0.15,
     backgroundColor: 'white',
     borderRadius: 15,
   },
