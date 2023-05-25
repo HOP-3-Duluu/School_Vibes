@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-export const Logo = props => {
+export const Logo = (props, width = 194, height = 250): any => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      width={194}
-      height={250}
+      width={width}
+      height={height}
       viewBox="0 0 194 250"
       fill="none"
       {...props}>

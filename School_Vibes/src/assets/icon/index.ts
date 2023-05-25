@@ -14,4 +14,8 @@ export * from './Left';
 export * from './Attachment';
 export * from './Close';
 export * from './Notifications';
+export * from './Phone';
+export * from './TermsCond';
+export * from './Logout';
+export * from './PrivacyPolicy';
 export * from './Logo';
