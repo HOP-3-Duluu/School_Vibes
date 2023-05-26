@@ -146,11 +146,13 @@ export const AddScreen = ({navigation}: any) => {
                 A Create New Task
               </Font>
             </Stack>
-            <TouchableOpacity>
-              <Font fontWeight="bold" fontSize={18} color={Colors.secondary}>
-                Save
-              </Font>
-            </TouchableOpacity>
+            <Padding right={Spacing / 2}>
+              <TouchableOpacity>
+                <Font fontWeight="bold" fontSize={18} color={Colors.secondary}>
+                  Save
+                </Font>
+              </TouchableOpacity>
+            </Padding>
           </Stack>
         </Padding>
         <Margin top={Spacing * 3}>
