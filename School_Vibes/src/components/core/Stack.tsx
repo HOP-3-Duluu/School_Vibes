@@ -7,7 +7,7 @@ type StackProps = {
   spacing?: number;
   alignItems?: ViewStyle['alignItems'];
   justifyContent?: ViewStyle['justifyContent'];
-  style?: ViewStyle;
+  style?: ViewStyle ;
   width?: ViewStyle['width'];
 };
 
