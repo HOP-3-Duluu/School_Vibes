@@ -7,24 +7,28 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  Font,
-  Margin,
-  Padding,
-  Stack,
-  TaskBox,
-  TickBox,
-  Time,
-} from '../components';
-import {Left} from '../assets';
+import {Font, Margin, Padding, Stack} from '../components';
+import {CorrectIcon, Left} from '../assets';
 import {Dimensions} from 'react-native';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
 
 const Card = ({item}) => {
+  const width = Dimensions.get('screen').width;
+  const height = Dimensions.get('screen').height;
+
   return (
     <View>
-      <Font>{item.title}</Font>
+      {/* <Font fontSize={20}>{item.describe}</Font> */}
+      <Padding right={Spacing * 2}>
+        <Stack alignItems="center" justifyContent="center">
+          <Image
+            source={require('../assets/images/lesson.jpg')}
+            resizeMode="contain"
+            style={{width, height: height / 2}}
+          />
+        </Stack>
+      </Padding>
     </View>
   );
 };
@@ -38,23 +42,26 @@ export const LessonDetail = props => {
       id: '1',
       title: 'Mathematics',
       header: 'Introduction',
+      describe: 'asadfasdfasdf',
       chapter: 1,
       userName: 'Brooklyn Williamson',
     },
-    {
-      id: '2',
-      title: 'Physics',
-      header: 'Basic Concepts',
-      chapter: 3,
-      userName: 'Ethan Parker',
-    },
-    {
-      id: '3',
-      title: 'Chemistry',
-      header: 'Chemical Reactions',
-      chapter: 2,
-      userName: 'Olivia Evans',
-    },
+    // {
+    //   id: '2',
+    //   title: 'Physics',
+    //   describe: 'asadfasdfasdf',
+    //   header: 'Basic Concepts',
+    //   chapter: 3,
+    //   userName: 'Ethan Parker',
+    // },
+    // {
+    //   id: '3',
+    //   title: 'Chemistry',
+    //   header: 'Chemical Reactions',
+    //   describe: 'asadfasdfasdf',
+    //   chapter: 2,
+    //   userName: 'Olivia Evans',
+    // },
   ];
   return (
     <ScrollView>
@@ -98,17 +105,27 @@ export const LessonDetail = props => {
           <View>
             <Font>Add Task</Font>
 
-            {tickBoxData.map((item, _index) => (
-              <Margin top={10} key={item.id}>
-                <Card item={item} />
-              </Margin>
-            ))}
+            <Margin top={10}>
+              <Card
+                item={{
+                  id: '1',
+                  title: 'Mathematics',
+                  header: 'Introduction',
+                  describe: 'asadfasdfasdf',
+                  chapter: 1,
+                  userName: 'Brooklyn Williamson',
+                }}
+              />
+            </Margin>
             <Font>Lessons</Font>
           </View>
-          <View>
-            <Font>TASKS</Font>
-            <Font>LESSONS</Font>
-          </View>
+          <TouchableOpacity style={styles.done}>
+            <Stack direction="row" spacing={Spacing}>
+              <Font>Done</Font>
+
+              <CorrectIcon />
+            </Stack>
+          </TouchableOpacity>
         </Padding>
       </SafeAreaView>
     </ScrollView>
@@ -121,5 +138,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 45,
     padding: 8,
+  },
+  done: {
+    // borderRadius: 10,
+    // backgroundColor: 'green',
+    // padding: 20,
   },
 });
