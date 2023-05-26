@@ -1,18 +1,7 @@
-import React, {ReactNode} from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ViewStyle,
-  PixelRatio,
-  Dimensions,
-  StyleProp,
-} from 'react-native';
-import {CorrectIcon, CalendarIcon} from '../../assets/icon';
-import {Font, Padding, Margin, Stack} from '../core';
-import {now} from 'moment';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import {Font, Margin, Stack} from '../core';
 import LinearGradient from 'react-native-linear-gradient';
-import CircularProgress from 'react-native-circular-progress-indicator';
 import Colors from '../../constants/Colors';
 import FontSize from '../../constants/FontSize';
 import * as Progress from 'react-native-progress';
@@ -41,47 +30,45 @@ export const GroupBox = ({
 
   return (
     <Margin right={15}>
-
-    <View style={styles.container}>
-      <Stack
-        style={{
+      <View style={styles.container}>
+        <Stack
+          style={{
             width: '100%',
             height: '35%',
             borderTopStartRadius: 10,
             borderTopRightRadius: 10,
             backgroundColor: main,
-        }}>
+          }}
+        />
+        <Stack
+          direction="row"
+          spacing={15}
+          alignItems="center"
+          style={styles.contain2}>
+          {/* <LinearGradient
+            colors={['white', main]}
+            style={styles.linearGradient}
+          /> */}
 
-        </Stack>
-      <Stack
-        direction="row"
-        spacing={15}
-        alignItems="center"
-        style={styles.contain2}>
-        <LinearGradient
-          colors={['white', main]}
-          style={styles.linearGradient}
-          />
+          <Stack direction="column" spacing={10}>
+            <Stack direction="column">
+              <Font fontSize={FontSize.large}>{GroupName}</Font>
 
-        <Stack direction="column" spacing={10}>
-          <Stack direction="column">
-            <Font fontSize={FontSize.large}>{GroupName}</Font>
+              <Font fontSize={FontSize.medium} style={{opacity: 0.4}}>
+                {Description}
+              </Font>
+            </Stack>
+            <Progress.Bar color={main} progress={Percentage} width={250} />
 
-            <Font fontSize={FontSize.medium} style={{opacity: 0.4}}>
-              {Description}
-            </Font>
+            <Stack direction="row">
+              <Margin left={-10}>
+                <View style={[styles.circle, {backgroundColor: main}]} />
+              </Margin>
+            </Stack>
           </Stack>
-          <Progress.Bar color={main} progress={Percentage} width={250} />
-
-          <Stack direction="row">
-            <Margin left={-10}>
-              <View style={[styles.circle, {backgroundColor: main}]} />
-            </Margin>
-          </Stack>
         </Stack>
-      </Stack>
-    </View>
-          </Margin>
+      </View>
+    </Margin>
   );
 };
 const styles = StyleSheet.create({
@@ -94,7 +81,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     backgroundColor: 'white',
     borderRadius: 15,
-
   },
   linearGradient: {
     height: '50%',
@@ -122,7 +108,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 50,
-    marginLeft:10
+    marginLeft: 10,
     // backgroundColor: Colors.primary,
   },
 });

@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 export const RootNavigation = () => {
   const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState<
     boolean | null
-  >(false);
+  >(true);
   const [isLogin, setLogin] = useState(true);
   useAsyncEffect(async () => {
     const appData = await AsyncStorage.getItem('isAppFirstLaunched');
