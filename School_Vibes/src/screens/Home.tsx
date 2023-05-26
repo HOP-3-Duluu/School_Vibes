@@ -17,6 +17,7 @@ import {
   TickBox,
   StatisticBox,
   Padding,
+  GroupBox,
 } from '../components';
 import Spacing from '../constants/Spacing';
 import Colors from '../constants/Colors';
@@ -47,27 +48,47 @@ export const Home = () => {
       chapter: 2,
       userName: 'Olivia Evans',
     },
-    // Add more items as needed
   ];
 
   const groupData = [
-    {id: '1', name: 'Group1'},
-    {id: '2', name: 'Group2'},
-    {id: '3', name: 'Group3'},
-    {id: '4', name: 'Group4'},
-    {id: '5', name: 'Group5'},
+    {id: '1', name: '11-4', description: '4r uy 11-4 angi', bar: 0.2},
+    {
+      id: '2',
+      name: 'Ulaan zagalmai',
+      description: '1r surguuli Ulaan zagalmai club',
+      bar: 0.6,
+    },
+    {id: '3', name: 'Hop-3', description: 'Pinecone academy', bar: 1},
+    {id: '4', name: 'English A', description: '11-a, 11-b English', bar: 0.7},
+    {id: '5', name: 'Nova', description: 'Preparing for ielts', bar: 0.4},
+    {id: '6', name: 'Hop-3', description: 'Pinecone academy', bar: 1},
+    {id: '7', name: 'English A', description: '11-a, 11-b English', bar: 0.7},
+    {id: '8', name: 'Nova', description: 'Preprin for ielts', bar: 0.4},
   ];
-
-  const renderItem = ({item}) => (
-    <Stack
-      justifyContent="center"
-      alignItems="center"
-      style={styles.renderItem}>
-      <Pressable
-        onPress={() => navigation.push('GroupDetail', {name: item.name})}>
-        <Font>{item.name}</Font>
-      </Pressable>
-    </Stack>
+  let arr: any = [];
+  const get = () => {
+    const min = 0;
+    const max = 6;
+    if (arr.length == 6) {
+      arr = [];
+    }
+    let rand = Math.floor(min + Math.random() * (max - min));
+    while (arr.includes(rand)) {
+      rand = Math.floor(min + Math.random() * (max - min));
+    }
+    arr.push(rand);
+    return rand;
+  };
+  const renderItem = ({item}: any) => (
+    <Pressable
+      onPress={() => navigation.push('GroupDetail', {name: item.name})}>
+      <GroupBox
+        Percentage={item.bar}
+        Index={get()}
+        GroupName={item.name}
+        Description={item.description}
+      />
+    </Pressable>
   );
 
   const getTimeOfDay = () => {

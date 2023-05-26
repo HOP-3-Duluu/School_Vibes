@@ -6,3 +6,4 @@ export * from './TickBox';
 export * from './NotificationCard';
 export * from './Time';
 export * from './AutoComplete';
+export * from './GroupCard'
