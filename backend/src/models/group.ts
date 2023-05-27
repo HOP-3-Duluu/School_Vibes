@@ -43,17 +43,16 @@ export const GetGroup = async (groupId: string): Promise<any> => {
   const { Item: item }: any = await db.getItem(params)
   return unmarshall(item)
 }
+export const UpdateGroup = async (group: GroupProps) => {
+  const marshalledGroup = marshall(group)
 
-export const UpdateGroup = async (
-  groupId: any,
-  name: string
-): Promise<string> => {
   const params = {
     TableName,
-    Key: marshall({ id: groupId, name }),
+    Item: marshalledGroup,
   }
 
-  await db.updateItem(params)
+  await db.putItem(params)
+
   return "Group updated successfully"
 }
 

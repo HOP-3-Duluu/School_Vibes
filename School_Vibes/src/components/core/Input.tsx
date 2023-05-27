@@ -14,7 +14,6 @@ export const Input: React.FC<TextInputProps> = ({...otherProps}) => {
       placeholderTextColor={Colors.gray}
       style={[
         {
-          // fontFamily: Font['poppins-regular'],
           fontSize: FontSize.small,
           padding: Spacing * 2,
           borderRadius: Spacing,

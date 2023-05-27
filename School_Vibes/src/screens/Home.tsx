@@ -8,7 +8,6 @@ import {
   View,
   Image,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -20,6 +19,7 @@ import {
   Padding,
   GroupBox,
   Button,
+  Input,
 } from '../components';
 import Spacing from '../constants/Spacing';
 import Colors from '../constants/Colors';
@@ -27,10 +27,17 @@ import {Notification, Plus} from '../assets';
 import {useAuth, UseData} from '../providers';
 import {Loading, NoData} from '../utils';
 import {ModalVisible} from '../components';
+import {instance} from '../library';
 export const Home = () => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedOption, setSelect] = useState<any>();
   const {user} = useAuth();
+  const [join, setJoin] = useState({
+    join: '',
+    detail: '',
+    name: '',
+  });
   const {groups, todayTask, loading} = UseData();
 
   const closeModal = () => {
@@ -61,6 +68,31 @@ export const Home = () => {
         />
       </Pressable>
     );
+  };
+
+  //realtime add hingut shud garc ireh
+  //add task
+  //signup
+
+  const CreateGroup = async props => {
+    try {
+      const {data} = await instance.post('/group', props);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const JoinGroup = async ({id}) => {
+    console.log(id, user?.id);
+    try {
+      const {data} = await instance.post('/joinGroup', {
+        groupId: id,
+        userId: user?.id.S,
+      });
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const getTimeOfDay = () => {
@@ -164,7 +196,7 @@ export const Home = () => {
                 <NoData />
               </View>
             ) : (
-              todayTask.map((item, index) => (
+              todayTask.map((item: any, index: number) => (
                 <TouchableOpacity
                   key={index}
                   onPress={() => navigation.push('LessonDetail', {item: item})}>
@@ -188,13 +220,50 @@ export const Home = () => {
         onClose={closeModal}
         title={'Select'}
         content={
-          <Stack direction="row" spacing={Spacing}>
-            <Button variant="contained" onPress={closeModal}>
-              Join Group
-            </Button>
-            <Button variant="outlined" onPress={() => console.log('create ')}>
-              Create Group
-            </Button>
+          <Stack direction="column" spacing={Spacing}>
+            {selectedOption === 'join' && (
+              <Stack justifyContent="center">
+                <Input
+                  placeholder="Enter group code"
+                  onChangeText={e => setJoin({...join, join: e})}
+                />
+                <Button
+                  variant="contained"
+                  onPress={() => JoinGroup({id: join.join})}>
+                  Join Group
+                </Button>
+              </Stack>
+            )}
+
+            {selectedOption === 'create' && (
+              <Stack alignItems="center" justifyContent="center">
+                <Input
+                  placeholder="Enter group name"
+                  onChangeText={e => setJoin({...join, name: e})}
+                />
+                <Input
+                  placeholder="Enter group description"
+                  onChangeText={e => setJoin({...join, detail: e})}
+                />
+                <Button
+                  variant="outlined"
+                  onPress={() =>
+                    CreateGroup({name: join.name, detail: join.detail})
+                  }>
+                  Create Group
+                </Button>
+              </Stack>
+            )}
+            {!selectedOption && (
+              <Stack direction="row" spacing={Spacing}>
+                <Button variant="contained" onPress={() => setSelect('join')}>
+                  Join Group
+                </Button>
+                <Button variant="outlined" onPress={() => setSelect('create')}>
+                  Create Group
+                </Button>
+              </Stack>
+            )}
           </Stack>
         }
       />

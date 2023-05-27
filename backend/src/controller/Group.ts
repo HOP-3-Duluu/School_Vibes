@@ -1,5 +1,7 @@
+import { marshall } from "@aws-sdk/util-dynamodb"
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { v4 as uuidv4 } from "uuid"
+import { db } from "../lib/database"
 import {
   CreateGroup,
   DeleteGroup,
@@ -7,6 +9,8 @@ import {
   GetUserGroup,
   UpdateGroup,
 } from "../models/group"
+import { GetUser, UpdateUser } from "../models/User"
+import { getUser, updateUser } from "./User"
 
 export const createGroup = async (
   event: APIGatewayProxyEvent
@@ -44,6 +48,59 @@ export const createGroup = async (
   }
 }
 
+export const joinGroup = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const { groupId, userId } = JSON.parse(event.body || "{}")
+
+    if (!groupId || !userId) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Missing required fields" }),
+      }
+    }
+
+    const group = await db.updateItem({
+      TableName: "Groups",
+      Key: marshall({ id: groupId }),
+      UpdateExpression:
+        "set #members = list_append(if_not_exists(#members, :emptyList), :userId)",
+      ExpressionAttributeNames: {
+        "#members": "members",
+      },
+      ExpressionAttributeValues: marshall({
+        ":userId": [userId],
+        ":emptyList": [],
+      }),
+      ReturnValues: "UPDATED_NEW",
+    })
+    const user = await db.updateItem({
+      TableName: "Users",
+      Key: marshall({ id: userId }),
+      UpdateExpression:
+        "set #groups = list_append(if_not_exists(#groups, :emptyList), :groupId)",
+      ExpressionAttributeNames: {
+        "#groups": "groups",
+      },
+      ExpressionAttributeValues: marshall({
+        ":groupId": [groupId],
+        ":emptyList": [],
+      }),
+      ReturnValues: "UPDATED_NEW",
+    })
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: { group, user } }),
+    }
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Internal server error" }),
+    }
+  }
+}
 export const deleteGroup = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
@@ -79,7 +136,7 @@ export const getGroup = async (
     if (!id) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: "Invalid ID" }),
+        body: JSON.stringify({ message: "Invalid group ID" }),
       }
     }
 
@@ -107,11 +164,8 @@ export const getGroup = async (
 export const updateGroup = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  const { id } = event.pathParameters || {}
-  const { name } = JSON.parse(event.body || "{}")
-
   try {
-    const message = UpdateGroup(id, name)
+    const message = UpdateGroup(JSON.parse(event.body || "{}"))
     return {
       body: JSON.stringify({ message }),
       statusCode: 200,

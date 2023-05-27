@@ -58,6 +58,12 @@ functions:
       - httpApi:
           path: /group
           method: post
+  joinGroup:
+    handler: src/controller/group.joinGroup
+    events:
+      - httpApi:
+          path: /joinGroup
+          method: post
   deleteGroup:
     handler: src/controller/group.deleteGroup
     events:

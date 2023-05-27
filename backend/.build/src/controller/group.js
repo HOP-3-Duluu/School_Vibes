@@ -9,8 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserGroup = exports.updateGroup = exports.getGroup = exports.deleteGroup = exports.createGroup = void 0;
+exports.getUserGroup = exports.updateGroup = exports.getGroup = exports.deleteGroup = exports.joinGroup = exports.createGroup = void 0;
+const util_dynamodb_1 = require("@aws-sdk/util-dynamodb");
 const uuid_1 = require("uuid");
+const database_1 = require("../lib/database");
 const group_1 = require("../models/group");
 const createGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -43,6 +45,54 @@ const createGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.createGroup = createGroup;
+const joinGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { groupId, userId } = JSON.parse(event.body || "{}");
+        if (!groupId || !userId) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Missing required fields" }),
+            };
+        }
+        const group = yield database_1.db.updateItem({
+            TableName: "Groups",
+            Key: (0, util_dynamodb_1.marshall)({ id: groupId }),
+            UpdateExpression: "set #members = list_append(if_not_exists(#members, :emptyList), :userId)",
+            ExpressionAttributeNames: {
+                "#members": "members",
+            },
+            ExpressionAttributeValues: (0, util_dynamodb_1.marshall)({
+                ":userId": [userId],
+                ":emptyList": [],
+            }),
+            ReturnValues: "UPDATED_NEW",
+        });
+        const user = yield database_1.db.updateItem({
+            TableName: "Users",
+            Key: (0, util_dynamodb_1.marshall)({ id: userId }),
+            UpdateExpression: "set #groups = list_append(if_not_exists(#groups, :emptyList), :groupId)",
+            ExpressionAttributeNames: {
+                "#groups": "groups",
+            },
+            ExpressionAttributeValues: (0, util_dynamodb_1.marshall)({
+                ":groupId": [groupId],
+                ":emptyList": [],
+            }),
+            ReturnValues: "UPDATED_NEW",
+        });
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message: { group, user } }),
+        };
+    }
+    catch (err) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Internal server error" }),
+        };
+    }
+});
+exports.joinGroup = joinGroup;
 const deleteGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = event.pathParameters || {};
@@ -72,7 +122,7 @@ const getGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
         if (!id) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ message: "Invalid ID" }),
+                body: JSON.stringify({ message: "Invalid group ID" }),
             };
         }
         const message = yield (0, group_1.GetGroup)(id);
@@ -96,10 +146,8 @@ const getGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getGroup = getGroup;
 const updateGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = event.pathParameters || {};
-    const { name } = JSON.parse(event.body || "{}");
     try {
-        const message = (0, group_1.UpdateGroup)(id, name);
+        const message = (0, group_1.UpdateGroup)(JSON.parse(event.body || "{}"));
         return {
             body: JSON.stringify({ message }),
             statusCode: 200,

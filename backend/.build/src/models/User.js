@@ -60,12 +60,12 @@ const GetUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     return (0, util_dynamodb_1.unmarshall)(item);
 });
 exports.GetUser = GetUser;
-const UpdateUser = (userId, name) => __awaiter(void 0, void 0, void 0, function* () {
+const UpdateUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const params = {
         TableName,
-        Key: (0, util_dynamodb_1.marshall)({ id: userId, name }),
+        Key: (0, util_dynamodb_1.marshall)(user),
     };
-    yield database_1.db.updateItem(params);
+    yield database_1.db.putItem(params);
     return "User updated successfully";
 });
 exports.UpdateUser = UpdateUser;
