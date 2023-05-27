@@ -41,12 +41,13 @@ const GetGroup = (groupId) => __awaiter(void 0, void 0, void 0, function* () {
     return (0, util_dynamodb_1.unmarshall)(item);
 });
 exports.GetGroup = GetGroup;
-const UpdateGroup = (groupId, name) => __awaiter(void 0, void 0, void 0, function* () {
+const UpdateGroup = (group) => __awaiter(void 0, void 0, void 0, function* () {
+    const marshalledGroup = (0, util_dynamodb_1.marshall)(group);
     const params = {
         TableName,
-        Key: (0, util_dynamodb_1.marshall)({ id: groupId, name }),
+        Item: marshalledGroup,
     };
-    yield database_1.db.updateItem(params);
+    yield database_1.db.putItem(params);
     return "Group updated successfully";
 });
 exports.UpdateGroup = UpdateGroup;

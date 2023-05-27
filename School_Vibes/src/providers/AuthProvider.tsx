@@ -9,7 +9,6 @@ interface userProps {
 interface AuthContextInterface {
   user?: userProps;
   setUser: Dispatch<SetStateAction<userProps>>;
-  Login: (name: string, password: string, rePassword: string) => void;
   updateUser: (username: string) => void;
   deleteUser: (username: string, password: string) => void;
 }
@@ -24,14 +23,6 @@ interface AuthProviderProps {
 export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
   const [user, setUser] = useState<userProps>();
   const [userId, setUserId] = useState<string>();
-  const Login = (name: string, password: string) => {
-    try {
-      // const login = await in
-      setUser({name, password});
-    } catch (e) {
-      return e;
-    }
-  };
 
   const updateUser = async (username: string) => {
     try {
@@ -51,8 +42,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
     }
   };
   return (
-    <AuthContext.Provider
-      value={{user, setUser, Login, updateUser, deleteUser}}>
+    <AuthContext.Provider value={{user, setUser, updateUser, deleteUser}}>
       {children}
     </AuthContext.Provider>
   );

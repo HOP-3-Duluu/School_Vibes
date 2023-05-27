@@ -63,15 +63,12 @@ export const GetUser = async (userId: string): Promise<any> => {
   return unmarshall(item)
 }
 
-export const UpdateUser = async (
-  userId: any,
-  name: string
-): Promise<string> => {
+export const UpdateUser = async (user): Promise<string> => {
   const params = {
     TableName,
-    Key: marshall({ id: userId, name }),
+    Key: marshall(user),
   }
 
-  await db.updateItem(params)
+  await db.putItem(params)
   return "User updated successfully"
 }

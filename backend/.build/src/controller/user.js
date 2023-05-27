@@ -100,7 +100,7 @@ const getUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
         if (!id) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ message: "Invalid ID" }),
+                body: JSON.stringify({ message: "Invalid user ID" }),
             };
         }
         const message = yield (0, User_1.GetUser)(id);
@@ -124,10 +124,8 @@ const getUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getUser = getUser;
 const updateUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = event.pathParameters || {};
-    const { name } = JSON.parse(event.body || "{}");
     try {
-        const message = (0, User_1.UpdateUser)(id, name);
+        const message = (0, User_1.UpdateUser)(JSON.parse(event.body || "{}"));
         return {
             body: JSON.stringify({ message }),
             statusCode: 200,

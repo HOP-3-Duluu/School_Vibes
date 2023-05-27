@@ -109,7 +109,7 @@ export const getUser = async (
     if (!id) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: "Invalid ID" }),
+        body: JSON.stringify({ message: "Invalid user ID" }),
       }
     }
 
@@ -136,11 +136,8 @@ export const getUser = async (
 export const updateUser = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  const { id } = event.pathParameters || {}
-  const { name } = JSON.parse(event.body || "{}")
-
   try {
-    const message = UpdateUser(id, name)
+    const message = UpdateUser(JSON.parse(event.body || "{}"))
     return {
       body: JSON.stringify({ message }),
       statusCode: 200,
