@@ -57,11 +57,6 @@ const CircleImage = () => {
 
 export const Profile = () => {
   const navigation = useNavigation();
-  const animationRef = useRef<any>(null);
-  useEffect(() => {
-    animationRef.current?.play();
-    animationRef.current?.play(30, 120);
-  }, []);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>

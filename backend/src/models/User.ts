@@ -1,4 +1,4 @@
-import { marshall } from "@aws-sdk/util-dynamodb"
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb"
 import { db } from "../lib/database"
 
 const TableName = "Users"
@@ -6,9 +6,9 @@ const TableName = "Users"
 interface UserProps {
   name: string
   id: string
-  image: string
+  password: string
+  gmail: string
 }
-
 export const CreateUser = async (user: UserProps) => {
   const marshalledUser = marshall(user)
 
@@ -22,6 +22,26 @@ export const CreateUser = async (user: UserProps) => {
   return "User created successfully"
 }
 
+export const LoginUser = async (gmail: string) => {
+  const params = {
+    TableName,
+    IndexName: "gmail-index",
+    KeyConditionExpression: "#id = :value",
+    ExpressionAttributeNames: {
+      "#id": "gmail",
+    },
+    ExpressionAttributeValues: {
+      ":value": {
+        S: gmail,
+      },
+    },
+  }
+
+  const { Items: items } = await db.query(params)
+
+  return items
+}
+
 export const DeleteUser = async (userId: string): Promise<string> => {
   const params = {
     TableName,
@@ -33,14 +53,14 @@ export const DeleteUser = async (userId: string): Promise<string> => {
   return "User deleted successfully"
 }
 
-export const GetUser = async (userId: string): Promise<string> => {
+export const GetUser = async (userId: string): Promise<any> => {
   const params = {
     TableName,
     Key: marshall({ id: userId }),
   }
 
   const { Item: item } = await db.getItem(params)
-  return JSON.stringify(item)
+  return unmarshall(item)
 }
 
 export const UpdateUser = async (

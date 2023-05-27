@@ -9,27 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserGroup = exports.updateGroup = exports.getGroup = exports.deleteGroup = exports.createGroup = void 0;
+exports.updateUser = exports.getUser = exports.deleteUser = exports.Login = exports.createUser = void 0;
 const uuid_1 = require("uuid");
-const group_1 = require("../models/group");
-const createGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
+const User_1 = require("../models/User");
+const createUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, detail } = JSON.parse(event.body || "{}");
-        if (!name || !detail) {
+        const { name, gmail, password } = JSON.parse(event.body || "{}");
+        if (!name || !gmail || !password) {
             return {
                 statusCode: 400,
                 body: JSON.stringify({ message: "Missing required fields" }),
             };
         }
-        const group = {
-            id: (0, uuid_1.v4)(),
+        const User = {
             name,
-            detail,
-            tasks: [],
-            members: [],
-            color: "green",
+            id: (0, uuid_1.v4)(),
+            gmail,
+            password,
         };
-        const message = yield (0, group_1.CreateGroup)(group);
+        const message = yield (0, User_1.CreateUser)(User);
         return {
             statusCode: 200,
             body: JSON.stringify({ message }),
@@ -42,44 +40,74 @@ const createGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
         };
     }
 });
-exports.createGroup = createGroup;
-const deleteGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
+exports.createUser = createUser;
+const Login = (event) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = event.pathParameters || {};
-        if (!id) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: "Invalid ID" }),
-            };
-        }
-        const message = yield (0, group_1.DeleteGroup)(id);
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message }),
-        };
-    }
-    catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: "Internal server error" }),
-        };
-    }
-});
-exports.deleteGroup = deleteGroup;
-const getGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { id } = event.pathParameters || {};
-        if (!id) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: "Invalid ID" }),
-            };
-        }
-        const message = yield (0, group_1.GetGroup)(id);
+        const { gmail, password } = JSON.parse(event.body || "{}");
+        const message = yield (0, User_1.LoginUser)(gmail);
         if (!message) {
             return {
                 statusCode: 404,
-                body: JSON.stringify({ message: "Group not found" }),
+                body: JSON.stringify({ message: "User not found" }),
+            };
+        }
+        if (message[0].password.S != password) {
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ message: "Нууц үг буруу байна" }),
+            };
+        }
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message }),
+        };
+    }
+    catch (err) {
+        console.log(err);
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Internal server error" }),
+        };
+    }
+});
+exports.Login = Login;
+const deleteUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = event.pathParameters || {};
+        if (!id) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Invalid ID" }),
+            };
+        }
+        const message = yield (0, User_1.DeleteUser)(id);
+        return {
+            statusCode: 200,
+            body: JSON.stringify({ message }),
+        };
+    }
+    catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ message: "Internal server error" }),
+        };
+    }
+});
+exports.deleteUser = deleteUser;
+const getUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = event.pathParameters || {};
+        if (!id) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: "Invalid ID" }),
+            };
+        }
+        const message = yield (0, User_1.GetUser)(id);
+        if (!message) {
+            return {
+                statusCode: 404,
+                body: JSON.stringify({ message: "User not found" }),
             };
         }
         return {
@@ -94,12 +122,12 @@ const getGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
         };
     }
 });
-exports.getGroup = getGroup;
-const updateGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getUser = getUser;
+const updateUser = (event) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = event.pathParameters || {};
     const { name } = JSON.parse(event.body || "{}");
     try {
-        const message = (0, group_1.UpdateGroup)(id, name);
+        const message = (0, User_1.UpdateUser)(id, name);
         return {
             body: JSON.stringify({ message }),
             statusCode: 200,
@@ -112,33 +140,4 @@ const updateGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
         };
     }
 });
-exports.updateGroup = updateGroup;
-const getUserGroup = (event) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { id } = event.pathParameters || {};
-        if (!id) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ message: "Invalid ID" }),
-            };
-        }
-        const message = yield (0, group_1.GetUserGroup)(id);
-        if (!message) {
-            return {
-                statusCode: 404,
-                body: JSON.stringify({ message: "Group not found" }),
-            };
-        }
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ message }),
-        };
-    }
-    catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ message: "Internal server error" }),
-        };
-    }
-});
-exports.getUserGroup = getUserGroup;
+exports.updateUser = updateUser;

@@ -10,7 +10,6 @@ interface AuthContextInterface {
   user?: userProps;
   setUser: Dispatch<SetStateAction<userProps>>;
   Login: (name: string, password: string, rePassword: string) => void;
-  signUp: (props: any) => void;
   updateUser: (username: string) => void;
   deleteUser: (username: string, password: string) => void;
 }
@@ -24,20 +23,11 @@ interface AuthProviderProps {
 
 export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
   const [user, setUser] = useState<userProps>();
-
-  const Login = (name: string, password: string, rePassword: string) => {
+  const [userId, setUserId] = useState<string>();
+  const Login = (name: string, password: string) => {
     try {
       // const login = await in
       setUser({name, password});
-    } catch (e) {
-      return e;
-    }
-  };
-
-  const signUp = async (props: any) => {
-    try {
-      await instance.post(`/user`, props);
-      return props;
     } catch (e) {
       return e;
     }
@@ -62,7 +52,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
   };
   return (
     <AuthContext.Provider
-      value={{user, setUser, Login, signUp, updateUser, deleteUser}}>
+      value={{user, setUser, Login, updateUser, deleteUser}}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,12 +1,7 @@
 import React, {useRef, useEffect} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-  StyleSheet,
-  Animated,
-} from 'react-native';
+import {View, Text, Modal, StyleSheet, Animated} from 'react-native';
+import Spacing from '../../constants/Spacing';
+import {Margin} from './Margin';
 
 export const ModalVisible = ({visible, onClose, title, content}: any) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -32,10 +27,7 @@ export const ModalVisible = ({visible, onClose, title, content}: any) => {
       <View style={styles.modalContainer}>
         <Animated.View style={[styles.modalContent, {opacity: fadeAnim}]}>
           <Text style={styles.modalTitle}>{title}</Text>
-          <Text style={styles.modalText}>{content}</Text>
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity>
+          <Margin top={Spacing * 2}>{content}</Margin>
         </Animated.View>
       </View>
     </Modal>
@@ -50,8 +42,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
+    paddingHorizontal: Spacing * 5,
+    padding: 30,
     backgroundColor: 'white',
-    padding: 20,
     borderRadius: 5,
     alignItems: 'center',
     transform: [{scale: 0.8}],
@@ -74,5 +67,6 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontSize: 16,
+    paddingHorizontal: 40,
   },
 });

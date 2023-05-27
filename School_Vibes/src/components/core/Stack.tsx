@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
 
 type StackProps = {
-  children: ReactNode;
+  children?: ReactNode;
   direction?: 'row' | 'column';
   spacing?: number;
   alignItems?: ViewStyle['alignItems'];

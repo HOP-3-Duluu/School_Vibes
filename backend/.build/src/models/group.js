@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateGroup = exports.GetGroup = exports.DeleteGroup = exports.CreateGroup = void 0;
+exports.GetUserGroup = exports.UpdateGroup = exports.GetGroup = exports.DeleteGroup = exports.CreateGroup = void 0;
 const util_dynamodb_1 = require("@aws-sdk/util-dynamodb");
 const database_1 = require("../lib/database");
 const TableName = "Groups";
@@ -19,7 +19,6 @@ const CreateGroup = (group) => __awaiter(void 0, void 0, void 0, function* () {
         TableName,
         Item: marshalledGroup,
     };
-    //s3
     yield database_1.db.putItem(params);
     return "Group created successfully";
 });
@@ -39,7 +38,7 @@ const GetGroup = (groupId) => __awaiter(void 0, void 0, void 0, function* () {
         Key: (0, util_dynamodb_1.marshall)({ id: groupId }),
     };
     const { Item: item } = yield database_1.db.getItem(params);
-    return item;
+    return (0, util_dynamodb_1.unmarshall)(item);
 });
 exports.GetGroup = GetGroup;
 const UpdateGroup = (groupId, name) => __awaiter(void 0, void 0, void 0, function* () {
@@ -51,3 +50,21 @@ const UpdateGroup = (groupId, name) => __awaiter(void 0, void 0, void 0, functio
     return "Group updated successfully";
 });
 exports.UpdateGroup = UpdateGroup;
+const GetUserGroup = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const params = {
+        TableName: "Users",
+        Key: (0, util_dynamodb_1.marshall)({ id: userId }),
+    };
+    const { Item: item } = yield database_1.db.getItem(params);
+    const groups = [];
+    if (item && item.groups) {
+        const userGroups = item.groups.L;
+        for (const group of userGroups) {
+            const groupId = group.S;
+            const groupData = yield (0, exports.GetGroup)(groupId);
+            groups.push(groupData);
+        }
+    }
+    return groups;
+});
+exports.GetUserGroup = GetUserGroup;

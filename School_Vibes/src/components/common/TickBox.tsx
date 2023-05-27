@@ -7,13 +7,23 @@ import MoreIcon from '../../assets/icon/More';
 import {useState} from 'react';
 import Trash from '../../assets/icon/Trash';
 import Edit from '../../assets/icon/Edit';
+import {useAsyncEffect} from '../../hooks';
+import {instance} from '../../library';
 
 export const TickBox = ({title, chapter, userName, header, style}: any) => {
   const [state, setState] = useState(false);
   const [show, setDisplay] = useState('none');
-  const changeState = () => {
-    setState(!state);
-  };
+  const [user, setUser] = useState('');
+  // const [name, setName] =
+  useAsyncEffect(async () => {
+    try {
+      const {data} = await instance.get(`/user/${userName}`);
+      setUser(data.message);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [userName]);
+
   const handleClick = () => {
     setDisplay('flex');
 
@@ -98,7 +108,7 @@ export const TickBox = ({title, chapter, userName, header, style}: any) => {
               color={state ? Colors.whiteText : Colors.text}
               fontWeight="400"
               fontSize={14}>
-              {userName}
+              {user?.gmail?.split('@')[0]}
             </Font>
           </View>
         </Stack>

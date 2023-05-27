@@ -21,6 +21,7 @@
     "@aws-sdk/client-sqs": "^3.267.0",
     "@aws-sdk/s3-request-presigner": "^3.264.0",
     "@aws-sdk/util-dynamodb": "^3.262.0",
+    "moment": "^2.29.4",
     "node-fetch": "^2.6.1",
     "socket.io": "^4.6.1",
     "uuid": "^9.0.0"

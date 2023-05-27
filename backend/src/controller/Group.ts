@@ -4,6 +4,7 @@ import {
   CreateGroup,
   DeleteGroup,
   GetGroup,
+  GetUserGroup,
   UpdateGroup,
 } from "../models/group"
 
@@ -11,9 +12,9 @@ export const createGroup = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const { name, image, description } = JSON.parse(event.body || "{}")
+    const { name, detail } = JSON.parse(event.body || "{}")
 
-    if (!name || !image || !description) {
+    if (!name || !detail) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: "Missing required fields" }),
@@ -21,10 +22,12 @@ export const createGroup = async (
     }
 
     const group = {
-      name,
       id: uuidv4(),
-      image,
-      description,
+      name,
+      detail,
+      tasks: [],
+      members: [],
+      color: "green",
     }
 
     const message = await CreateGroup(group)
@@ -112,6 +115,39 @@ export const updateGroup = async (
     return {
       body: JSON.stringify({ message }),
       statusCode: 200,
+    }
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Internal server error" }),
+    }
+  }
+}
+
+export const getUserGroup = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const { id } = event.pathParameters || {}
+    if (!id) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Invalid ID" }),
+      }
+    }
+
+    const message = await GetUserGroup(id)
+
+    if (!message) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: "Group not found" }),
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message }),
     }
   } catch (error) {
     return {

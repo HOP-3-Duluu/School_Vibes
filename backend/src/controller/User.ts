@@ -1,14 +1,20 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { v4 as uuidv4 } from "uuid"
-import { CreateUser, DeleteUser, GetUser, UpdateUser } from "../models/user"
+import {
+  CreateUser,
+  DeleteUser,
+  GetUser,
+  LoginUser,
+  UpdateUser,
+} from "../models/User"
 
 export const createUser = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const { name, image, description } = JSON.parse(event.body || "{}")
+    const { name, gmail, password } = JSON.parse(event.body || "{}")
 
-    if (!name || !image || !description) {
+    if (!name || !gmail || !password) {
       return {
         statusCode: 400,
         body: JSON.stringify({ message: "Missing required fields" }),
@@ -18,7 +24,8 @@ export const createUser = async (
     const User = {
       name,
       id: uuidv4(),
-      image,
+      gmail,
+      password,
     }
 
     const message = await CreateUser(User)
@@ -28,6 +35,38 @@ export const createUser = async (
       body: JSON.stringify({ message }),
     }
   } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Internal server error" }),
+    }
+  }
+}
+
+export const Login = async (
+  event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const { gmail, password } = JSON.parse(event.body || "{}")
+    const message: any = await LoginUser(gmail)
+    if (!message) {
+      return {
+        statusCode: 404,
+        body: JSON.stringify({ message: "User not found" }),
+      }
+    }
+    if (message[0].password.S != password) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ message: "Нууц үг буруу байна" }),
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message }),
+    }
+  } catch (err) {
+    console.log(err)
     return {
       statusCode: 500,
       body: JSON.stringify({ message: "Internal server error" }),
@@ -74,8 +113,7 @@ export const getUser = async (
       }
     }
 
-    const message = GetUser(id)
-
+    const message = await GetUser(id)
     if (!message) {
       return {
         statusCode: 404,

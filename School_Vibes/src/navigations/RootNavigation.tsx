@@ -20,7 +20,6 @@ export const RootNavigation = () => {
   const [isLogin, setLogin] = useState(true);
   useAsyncEffect(async () => {
     const appData = await AsyncStorage.getItem('isAppFirstLaunched');
-    // console.log(appData);
     // if (appData == null) {
     //   setIsAppFirstLaunched(true);
     //   AsyncStorage.setItem('isAppFirstLaunched', 'false');
