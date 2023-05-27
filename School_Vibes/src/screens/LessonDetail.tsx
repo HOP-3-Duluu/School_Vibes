@@ -51,19 +51,6 @@ export const LessonDetail = props => {
           />
         </SafeAreaView>
 
-        <Padding left={Spacing * 1.5} top={Spacing}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.back}>
-            <Left color={Colors.background} />
-          </TouchableOpacity>
-        </Padding>
-        <Margin top={Spacing * 2} />
-        <Padding horizontal={Spacing * 2}>
-          <Font color={Colors.whiteText} fontWeight="bold" fontSize={30}>
-            Geography
-          </Font>
-
         <View style={styles.scrollViewContent}>
           <Padding left={Spacing * 1.5} top={Spacing}>
             <TouchableOpacity
@@ -91,9 +78,9 @@ export const LessonDetail = props => {
                 style={{width: 50, height: 50, borderRadius: 50}}
               />
               <Margin horizontal={Spacing / 2} />
-              <Font color={Colors.whiteText} fontWeight="600" fontSize={20}>
+              {/* <Font color={Colors.whiteText} fontWeight="600" fontSize={20}>
                 {item?.author?.S}
-              </Font>
+              </Font> */}
             </Stack>
             <Margin top={Spacing * 4} />
             <View>

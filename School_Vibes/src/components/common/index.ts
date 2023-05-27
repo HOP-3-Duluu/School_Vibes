@@ -1,10 +1,10 @@
 export * from './Calendar';
 export * from './ProgressBar';
-export * from './TaskBox';
 export * from './StatisticBox';
+export * from './TaskBox';
+export * from './GroupCard';
 export * from './TickBox';
 export * from './NotificationCard';
 export * from './Time';
 export * from './AutoComplete';
-export * from './GroupCard';
-export * from './Members';
+// export * from './Members';
