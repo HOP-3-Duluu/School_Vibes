@@ -19,3 +19,4 @@ export * from './TermsCond';
 export * from './Logout';
 export * from './PrivacyPolicy';
 export * from './Logo';
+export * from './Delete';

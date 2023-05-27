@@ -21,7 +21,7 @@ import {
 } from '../components';
 import Spacing from '../constants/Spacing';
 import Colors from '../constants/Colors';
-import {Notification} from '../assets';
+import {Notification, Plus} from '../assets';
 
 export const Home = () => {
   const navigation = useNavigation();
@@ -65,31 +65,32 @@ export const Home = () => {
     {id: '7', name: 'English A', description: '11-a, 11-b English', bar: 0.7},
     {id: '8', name: 'Nova', description: 'Preprin for ielts', bar: 0.4},
   ];
-  let arr: any = [];
-  const get = () => {
-    const min = 0;
-    const max = 6;
-    if (arr.length == 6) {
-      arr = [];
-    }
-    let rand = Math.floor(min + Math.random() * (max - min));
-    while (arr.includes(rand)) {
-      rand = Math.floor(min + Math.random() * (max - min));
-    }
-    arr.push(rand);
-    return rand;
+
+  const renderItem = ({item}: any) => {
+    const randomNumber = Math.floor(Math.random() * 5) + 1;
+    let colors = [
+      Colors.active,
+      Colors.primary,
+      Colors.danger,
+      Colors.success,
+      Colors.warning,
+      Colors.secondary,
+    ];
+    const main = colors[randomNumber];
+    return (
+      <Pressable
+        onPress={() =>
+          navigation.push('GroupDetail', {item: item, bgColor: main})
+        }>
+        <GroupBox
+          Percentage={item.bar}
+          bgColor={main}
+          GroupName={item.name}
+          Description={item.description}
+        />
+      </Pressable>
+    );
   };
-  const renderItem = ({item}: any) => (
-    <Pressable
-      onPress={() => navigation.push('GroupDetail', {name: item.name})}>
-      <GroupBox
-        Percentage={item.bar}
-        Index={get()}
-        GroupName={item.name}
-        Description={item.description}
-      />
-    </Pressable>
-  );
 
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
@@ -107,7 +108,7 @@ export const Home = () => {
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <SafeAreaView>
-          <Padding horizontal={20} top={20}>
+          <Padding horizontal={15} top={20}>
             <Stack
               direction="row"
               justifyContent="space-between"
@@ -141,7 +142,7 @@ export const Home = () => {
         </SafeAreaView>
       </View>
       {/* <Padding horizontal={15}> */}
-      <View style={{bottom: 80}}>
+      <View style={{bottom: Spacing * 8}}>
         <Padding horizontal={15}>
           <StatisticBox
             Progress={77}
@@ -152,9 +153,15 @@ export const Home = () => {
         </Padding>
         <Margin top={Spacing * 2} />
         <Padding left={15}>
-          <Font fontWeight="bold" fontSize={25}>
-            Groups
-          </Font>
+          <Stack direction="row" alignItems="center">
+            <Font fontWeight="bold" fontSize={25}>
+              Groups
+            </Font>
+            <Margin horizontal={Spacing} />
+            <TouchableOpacity>
+              <Plus width={18} height={18} />
+            </TouchableOpacity>
+          </Stack>
           <Margin top={10} />
           <FlatList
             data={groupData}
@@ -167,21 +174,24 @@ export const Home = () => {
           />
         </Padding>
         <Margin top={Spacing * 2} />
-        <Padding horizontal={20}>
+        <Padding horizontal={15}>
           <Font fontWeight="bold" fontSize={25}>
             Tasks Today
           </Font>
-          {tickBoxData.map((item, _index) => (
-            <Margin top={10} key={item.id}>
-              <TickBox
-                style={{width: '100%'}}
-                onPress={() => navigation.push('LessonDetail')}
-                title={item.title}
-                header={item.header}
-                chapter={item.chapter}
-                userName={item.userName}
-              />
-            </Margin>
+          {tickBoxData.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.push('LessonDetail', {item: item})}>
+              <Margin top={10} key={item.id}>
+                <TickBox
+                  style={{width: '100%'}}
+                  title={item.title}
+                  header={item.header}
+                  chapter={item.chapter}
+                  userName={item.userName}
+                />
+              </Margin>
+            </TouchableOpacity>
           ))}
         </Padding>
       </View>

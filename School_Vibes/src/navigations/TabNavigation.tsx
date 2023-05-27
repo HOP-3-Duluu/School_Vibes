@@ -25,14 +25,7 @@ const TabArr = [
     ),
     component: Task,
   },
-  // {
-  //   route: 'Join',
-  //   label: 'Join',
-  //   icon: ({focused}: any) => (
-  //     <CalendarIcon color={focused ? Colors.background : Colors.primary} />
-  //   ),
-  //   component: JoinScreen,
-  // },
+
   {
     route: 'Profile',
     label: 'Profile',
@@ -45,8 +38,8 @@ const TabArr = [
 
 const animate1 = {
   0: {scale: 0.5, translateY: 0},
-  0.92: {translateY: -34},
-  1: {scale: 1.2, translateY: -24},
+  0.92: {translateY: -19},
+  1: {scale: 1.2, translateY: -9},
 };
 const animate2 = {
   0: {scale: 1.2, translateY: -24},
@@ -133,7 +126,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    borderWidth: 4,
+    borderWidth: 3,
     borderColor: Colors.background,
     backgroundColor: Colors.background,
     justifyContent: 'center',

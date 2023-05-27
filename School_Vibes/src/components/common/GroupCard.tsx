@@ -2,7 +2,6 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Font, Margin, Stack} from '../core';
 import LinearGradient from 'react-native-linear-gradient';
-import Colors from '../../constants/Colors';
 import FontSize from '../../constants/FontSize';
 import * as Progress from 'react-native-progress';
 
@@ -10,24 +9,14 @@ interface GroupBoxProps {
   GroupName: string;
   Description: string;
   Percentage: number;
-  Index: number;
+  bgColor: string;
 }
 export const GroupBox = ({
   GroupName,
   Description,
   Percentage,
-  Index,
+  bgColor,
 }: GroupBoxProps) => {
-  let colors = [
-    Colors.active,
-    Colors.primary,
-    Colors.danger,
-    Colors.warning,
-    Colors.success,
-    Colors.secondary,
-  ];
-  const main = colors[Index];
-
   return (
     <Margin right={15}>
       <View style={styles.container}>
@@ -37,7 +26,7 @@ export const GroupBox = ({
             height: '35%',
             borderTopStartRadius: 10,
             borderTopRightRadius: 10,
-            backgroundColor: main,
+            backgroundColor: bgColor,
           }}
         />
         <Stack
@@ -45,10 +34,10 @@ export const GroupBox = ({
           spacing={15}
           alignItems="center"
           style={styles.contain2}>
-          {/* <LinearGradient
-            colors={['white', main]}
+          <LinearGradient
+            colors={['white', bgColor]}
             style={styles.linearGradient}
-          /> */}
+          />
 
           <Stack direction="column" spacing={10}>
             <Stack direction="column">
@@ -58,11 +47,11 @@ export const GroupBox = ({
                 {Description}
               </Font>
             </Stack>
-            <Progress.Bar color={main} progress={Percentage} width={250} />
+            <Progress.Bar color={bgColor} progress={Percentage} width={250} />
 
             <Stack direction="row">
               <Margin left={-10}>
-                <View style={[styles.circle, {backgroundColor: main}]} />
+                <View style={[styles.circle, {backgroundColor: bgColor}]} />
               </Margin>
             </Stack>
           </Stack>
