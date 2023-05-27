@@ -16,7 +16,7 @@ const PosImage = ({img, index}) => {
   );
 };
 
-const Members = () => {
+export const Members = () => {
   const image = [
     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/55758/random-user-31.jpg',
     'https://s3-us-west-2.amazonaws.com/s.cdpn.io/55758/random-user-31.jpg',
