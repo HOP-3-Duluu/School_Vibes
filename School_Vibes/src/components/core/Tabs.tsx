@@ -7,15 +7,19 @@ import Spacing from '../../constants/Spacing';
 
 interface TabsProps {
   tabs: string[];
-  initialTab: number;
-  onTabChange: () => void;
+  initialTab?: number;
+  setValues: any;
 }
 
-export const Tabs: FC<TabsProps> = ({tabs, initialTab, onTabChange}) => {
+export const Tabs: FC<TabsProps> = ({tabs, initialTab = 0, setValues}) => {
   const [activeTab, setActiveTab] = useState<number>(initialTab);
   const width = Dimensions.get('screen').width;
   const handleTabChange = (index: number) => {
-    onTabChange;
+    setValues(prev => {
+      console.log(prev);
+      return {...prev, type: tabs[index]};
+    });
+
     setActiveTab(index);
   };
   return (

@@ -9,30 +9,48 @@ provider:
   region`: ap-southeast-1
 
 functions:
-  getClass:
-    handler: src/controller/class.getClass
+  getTask:
+    handler: src/controller/task.getTask
     events:
       - httpApi:
-          path: /class/{id}
+          path: /task/{id}
           method: get
-  createClass:
-    handler: src/controller/class.createClass
+  getTodayTask:
+    handler: src/controller/task.getTodayTask
     events:
       - httpApi:
-          path: /class
+          path: /taskToday
+          method: get
+  getTaskByDate:
+    handler: src/controller/task.getTaskByDate
+    events:
+      - httpApi:
+          path: /taskDate/{id}
+          method: get
+  createTask:
+    handler: src/controller/task.createTask
+    events:
+      - httpApi:
+          path: /task
           method: post
-  deleteClass:
-    handler: src/controller/class.deleteClass
+  deleteTask:
+    handler: src/controller/task.deleteTask
     events:
       - httpApi:
-          path: /class
+          path: /task
           method: delete
-  updateClass:
-    handler: src/controller/class.updateClass
+  updateTask:
+    handler: src/controller/task.updateTask
     events:
       - httpApi:
-          path: /class
+          path: /task
           method: put
+  login:
+    handler: src/controller/user.Login
+    events:
+      - httpApi:
+          path: /login
+          method: post
 
   createGroup:
     handler: src/controller/group.createGroup
@@ -52,6 +70,12 @@ functions:
       - httpApi:
           path: /group/{id}
           method: get
+  getUserGroup:
+    handler: src/controller/group.getUserGroup
+    events:
+      - httpApi:
+          path: /userGroup/{id}
+          method: get
   updateGroup:
     handler: src/controller/group.updateGroup
     events:
@@ -60,29 +84,35 @@ functions:
           method: put
 
   createUser:
-    handler: src/controller/group.createUser
+    handler: src/controller/user.createUser
     events:
       - httpApi:
           path: /user
           method: post
   deleteUser:
-    handler: src/controller/group.deleteUser
+    handler: src/controller/user.deleteUser
     events:
       - httpApi:
           path: /user
           method: delete
   getUser:
-    handler: src/controller/group.getUser
+    handler: src/controller/user.getUser
     events:
       - httpApi:
           path: /user/{id}
           method: get
   updateUser:
-    handler: src/controller/group.updateUser
+    handler: src/controller/user.updateUser
     events:
       - httpApi:
           path: /user
           method: put
+  createContent:
+    handler: src/controller/addPhoto.CreateContent
+    events:
+      - httpApi:
+          path: /createContent
+          method: post
 
 plugins:
   - serverless-plugin-typescript

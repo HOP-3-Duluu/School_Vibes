@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@fawazahmed/react-native-read-more": "^3.0.3",
     "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/datetimepicker": "^7.0.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -29,6 +30,7 @@
     "react-native-date-picker": "^4.2.13",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-textinput": "^2.2.0",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.10.1",
     "react-native-image-picker": "^5.3.1",
     "react-native-linear-gradient": "^2.6.2",

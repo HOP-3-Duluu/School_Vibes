@@ -19,6 +19,10 @@ import {Dimensions} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {PERMISSIONS, request} from 'react-native-permissions';
 import {day, monthName, year} from '../library/Date';
+import {UseData} from '../providers';
+import {instance} from '../library';
+import RNFS from 'react-native-fs';
+import {useAsyncEffect} from '../hooks';
 const Attachment = ({
   photo,
   index,
@@ -76,10 +80,19 @@ const Attachment = ({
   );
 };
 
-export const AddScreen = ({navigation}: any) => {
+export const AddScreen = ({navigation, route}: any) => {
   const [photos, setPhoto] = useState<any>([]);
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [text, setText] = useState('');
+  const [values, setValues] = useState({
+    groupName: '',
+    image: [],
+    title: '',
+    description: '',
+    date: '',
+    type: '',
+  });
+  const {groups} = UseData();
   const height = Dimensions.get('screen').height;
   const width = Dimensions.get('screen').width;
 
@@ -94,6 +107,21 @@ export const AddScreen = ({navigation}: any) => {
       setPhoto((prev: any) => [...prev, response.assets[0].uri]);
     });
   };
+
+  useAsyncEffect(async () => {
+    photos.map(async photo => {
+      // const fileContent = await RNFS.readFile(photo, 'base64');
+
+      const data = await instance.post('createContent', {
+        base: 'fileContent',
+      });
+      console.log(data);
+      // setValues({
+      //   ...values,
+      //   image: [...values.image, data],
+      // });
+    });
+  }, [photos]);
 
   const requstPhotoLibrary = async () => {
     try {
@@ -118,12 +146,24 @@ export const AddScreen = ({navigation}: any) => {
     setModalVisible(false);
   };
 
-  const [text, setText] = useState('');
-
-  const handleClearText = () => {
-    setText('');
+  const addPhoto = async () => {
+    try {
+      const response = await fetch(picture);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = async () => {
+        const base64data = reader.result?.toString().split(',')[1];
+        try {
+          const s3Picture = await savePicture({base64: base64data});
+        } catch (e) {
+          throw e;
+        }
+      };
+    } catch (error) {
+      throw error;
+    }
   };
-
   return (
     <View style={styles.container}>
       <SafeAreaView
@@ -160,7 +200,7 @@ export const AddScreen = ({navigation}: any) => {
             <Stack>
               <Padding bottom={Spacing / 2}>
                 <Font color={Colors.secondary} fontWeight="bold">
-                  Label
+                  Group
                 </Font>
               </Padding>
               <Stack direction="row" alignItems="center">
@@ -177,7 +217,16 @@ export const AddScreen = ({navigation}: any) => {
                   />
                 </View>
                 <Margin horizontal={5} />
-                <TouchableOpacity onPress={openModal}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (!route?.params?.groupName) {
+                      openModal();
+                    } else {
+                      Alert.alert(
+                        `Зөвхөн ${route?.params?.groupName} дээрээ нэмнэ үү.`,
+                      );
+                    }
+                  }}>
                   <View
                     style={{
                       borderBottomColor: Colors.secondary,
@@ -190,7 +239,9 @@ export const AddScreen = ({navigation}: any) => {
                         fontWeight="500"
                         fontSize={17}
                         color={Colors.whiteText}>
-                        name
+                        {values.groupName ||
+                          route?.params?.groupName ||
+                          'Select group'}
                       </Font>
                     </Padding>
                   </View>
@@ -201,27 +252,26 @@ export const AddScreen = ({navigation}: any) => {
             <Stack>
               <Padding bottom={Spacing / 2}>
                 <Font color={Colors.secondary} fontWeight="bold">
-                  Label
+                  Title
                 </Font>
               </Padding>
-              <TouchableOpacity onPress={openModal}>
-                <View
-                  style={{
-                    borderBottomColor: Colors.secondary,
-                    borderBottomWidth: 1,
-                    width: width / 1.09,
-                  }}>
-                  <Padding bottom={Spacing / 2}>
-                    <Font
-                      style={{width: '100%'}}
-                      fontWeight="500"
-                      fontSize={17}
-                      color={Colors.whiteText}>
-                      name
-                    </Font>
-                  </Padding>
-                </View>
-              </TouchableOpacity>
+              <View style={[styles.inputContainer, {width: width / 1.09}]}>
+                <TextInput
+                  style={styles.input}
+                  value={values.title}
+                  onChangeText={inputText =>
+                    setValues({...values, title: inputText})
+                  }
+                  placeholder="Name"
+                />
+                {text.length > 0 && (
+                  <TouchableOpacity
+                    onPress={() => setText('')}
+                    style={styles.clearButton}>
+                    <Close stroke={Colors.secondary} />
+                  </TouchableOpacity>
+                )}
+              </View>
             </Stack>
             <Margin top={Spacing * 2} />
             <Stack direction="row" justifyContent="center" style={{width}}>
@@ -232,7 +282,7 @@ export const AddScreen = ({navigation}: any) => {
                   </Font>
                 </Padding>
                 <Margin top={Spacing} />
-                <Stack direction="row">
+                <Stack direction="row" alignItems="center">
                   <View
                     style={{
                       borderBottomColor: Colors.secondary,
@@ -252,7 +302,9 @@ export const AddScreen = ({navigation}: any) => {
                       </Stack>
                     </Padding>
                   </View>
-                  <Margin horizontal={Spacing * 2.5} />
+                  <Margin horizontal={Spacing * 1.5}>
+                    <Font color={Colors.whiteText}>---</Font>
+                  </Margin>
                   <View
                     style={{
                       borderBottomColor: Colors.secondary,
@@ -285,13 +337,15 @@ export const AddScreen = ({navigation}: any) => {
               <View style={[styles.inputContainer, {width: width / 1.09}]}>
                 <TextInput
                   style={styles.input}
-                  value={text}
-                  onChangeText={inputText => setText(inputText)}
+                  value={values.description}
+                  onChangeText={inputText =>
+                    setValues({...values, description: inputText})
+                  }
                   placeholder="Name"
                 />
                 {text.length > 0 && (
                   <TouchableOpacity
-                    onPress={handleClearText}
+                    onPress={() => setText('')}
                     style={styles.clearButton}>
                     <Close stroke={Colors.secondary} />
                   </TouchableOpacity>
@@ -299,7 +353,7 @@ export const AddScreen = ({navigation}: any) => {
               </View>
             </Stack>
             <Margin top={Spacing} bottom={Spacing}>
-              <Tabs tabs={['Easy', 'Medium', 'Hard']} />
+              <Tabs tabs={['Easy', 'Medium', 'Hard']} setValues={setValues} />
             </Margin>
           </Stack>
         </Margin>
@@ -364,8 +418,22 @@ export const AddScreen = ({navigation}: any) => {
       <ModalVisible
         visible={modalVisible}
         onClose={closeModal}
-        title="My Modal"
-        content="This is a custom modal component."
+        title="Group Names"
+        content={
+          <View>
+            {groups.map((group: any) => (
+              <TouchableOpacity
+                style={styles.groupName}
+                key={group.id}
+                onPress={() => {
+                  setValues({...values, groupName: group.name});
+                  setModalVisible(false);
+                }}>
+                <Font fontSize={20}>{group.name}</Font>
+              </TouchableOpacity>
+            ))}
+          </View>
+        }
       />
     </View>
   );
@@ -420,9 +488,17 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     flex: 1,
+    color: 'white',
   },
   clearButton: {
     marginLeft: 10,
     paddingVertical: 5,
+  },
+  groupName: {
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.gray,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
   },
 });

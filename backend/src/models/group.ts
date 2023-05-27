@@ -1,4 +1,4 @@
-import { marshall } from "@aws-sdk/util-dynamodb"
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb"
 import { db } from "../lib/database"
 
 const TableName = "Groups"
@@ -6,8 +6,10 @@ const TableName = "Groups"
 interface GroupProps {
   name: string
   id: string
-  image: string
-  description: string
+  detail: string
+  tasks: any[]
+  members: any[]
+  color: string
 }
 
 export const CreateGroup = async (group: GroupProps) => {
@@ -17,7 +19,6 @@ export const CreateGroup = async (group: GroupProps) => {
     TableName,
     Item: marshalledGroup,
   }
-  //s3
   await db.putItem(params)
 
   return "Group created successfully"
@@ -39,8 +40,8 @@ export const GetGroup = async (groupId: string): Promise<any> => {
     TableName,
     Key: marshall({ id: groupId }),
   }
-  const { Item: item } = await db.getItem(params)
-  return item
+  const { Item: item }: any = await db.getItem(params)
+  return unmarshall(item)
 }
 
 export const UpdateGroup = async (
@@ -54,4 +55,25 @@ export const UpdateGroup = async (
 
   await db.updateItem(params)
   return "Group updated successfully"
+}
+
+export const GetUserGroup = async (userId: string): Promise<any> => {
+  const params = {
+    TableName: "Users",
+    Key: marshall({ id: userId }),
+  }
+  const { Item: item } = await db.getItem(params)
+  const groups: any[] = []
+
+  if (item && item.groups) {
+    const userGroups: any = item.groups.L
+
+    for (const group of userGroups) {
+      const groupId = group.S
+      const groupData = await GetGroup(groupId)
+      groups.push(groupData)
+    }
+  }
+
+  return groups
 }

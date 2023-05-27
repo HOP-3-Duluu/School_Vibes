@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Pressable,
   FlatList,
@@ -8,6 +8,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -18,54 +19,23 @@ import {
   StatisticBox,
   Padding,
   GroupBox,
+  Button,
 } from '../components';
 import Spacing from '../constants/Spacing';
 import Colors from '../constants/Colors';
 import {Notification, Plus} from '../assets';
-
+import {useAuth, UseData} from '../providers';
+import {Loading, NoData} from '../utils';
+import {ModalVisible} from '../components';
 export const Home = () => {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const {user} = useAuth();
+  const {groups, todayTask, loading} = UseData();
 
-  const tickBoxData = [
-    {
-      id: '1',
-      title: 'Mathematics',
-      header: 'Introduction',
-      chapter: 1,
-      userName: 'Brooklyn Williamson',
-    },
-    {
-      id: '2',
-      title: 'Physics',
-      header: 'Basic Concepts',
-      chapter: 3,
-      userName: 'Ethan Parker',
-    },
-    {
-      id: '3',
-      title: 'Chemistry',
-      header: 'Chemical Reactions',
-      chapter: 2,
-      userName: 'Olivia Evans',
-    },
-  ];
-
-  const groupData = [
-    {id: '1', name: '11-4', description: '4r uy 11-4 angi', bar: 0.2},
-    {
-      id: '2',
-      name: 'Ulaan zagalmai',
-      description: '1r surguuli Ulaan zagalmai club',
-      bar: 0.6,
-    },
-    {id: '3', name: 'Hop-3', description: 'Pinecone academy', bar: 1},
-    {id: '4', name: 'English A', description: '11-a, 11-b English', bar: 0.7},
-    {id: '5', name: 'Nova', description: 'Preparing for ielts', bar: 0.4},
-    {id: '6', name: 'Hop-3', description: 'Pinecone academy', bar: 1},
-    {id: '7', name: 'English A', description: '11-a, 11-b English', bar: 0.7},
-    {id: '8', name: 'Nova', description: 'Preprin for ielts', bar: 0.4},
-  ];
-
+  const closeModal = () => {
+    setModalVisible(false);
+  };
   const renderItem = ({item}: any) => {
     const randomNumber = Math.floor(Math.random() * 5) + 1;
     let colors = [
@@ -83,10 +53,11 @@ export const Home = () => {
           navigation.push('GroupDetail', {item: item, bgColor: main})
         }>
         <GroupBox
-          Percentage={item.bar}
+          Percentage={0.7}
           bgColor={main}
           GroupName={item.name}
-          Description={item.description}
+          Description={item.detail}
+          members={item.members}
         />
       </Pressable>
     );
@@ -118,7 +89,7 @@ export const Home = () => {
                   {getTimeOfDay()} 👋
                 </Font>
                 <Font fontSize={25} color={Colors.whiteText} fontWeight="600">
-                  Nasanbat Ganbold
+                  {user?.gmail.S?.split('@')[0]}
                 </Font>
               </Stack>
               <Stack direction="row" alignItems="center">
@@ -141,7 +112,6 @@ export const Home = () => {
           </Padding>
         </SafeAreaView>
       </View>
-      {/* <Padding horizontal={15}> */}
       <View style={{bottom: Spacing * 8}}>
         <Padding horizontal={15}>
           <StatisticBox
@@ -158,43 +128,76 @@ export const Home = () => {
               Groups
             </Font>
             <Margin horizontal={Spacing} />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Plus width={18} height={18} />
             </TouchableOpacity>
           </Stack>
           <Margin top={10} />
-          <FlatList
-            data={groupData}
-            renderItem={renderItem}
-            decelerationRate="fast"
-            snapToInterval={Spacing}
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.id}
-            horizontal
-          />
+          {loading.group ? (
+            <View style={{height: 100}}>
+              <Loading />
+            </View>
+          ) : (
+            <FlatList
+              data={groups}
+              renderItem={renderItem}
+              decelerationRate="fast"
+              snapToInterval={Spacing}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={item => item.id}
+              horizontal
+            />
+          )}
         </Padding>
         <Margin top={Spacing * 2} />
         <Padding horizontal={15}>
           <Font fontWeight="bold" fontSize={25}>
             Tasks Today
           </Font>
-          {tickBoxData.map((item, index) => (
-            <TouchableOpacity
-              key={index}
-              onPress={() => navigation.push('LessonDetail', {item: item})}>
-              <Margin top={10} key={item.id}>
-                <TickBox
-                  style={{width: '100%'}}
-                  title={item.title}
-                  header={item.header}
-                  chapter={item.chapter}
-                  userName={item.userName}
-                />
-              </Margin>
-            </TouchableOpacity>
-          ))}
+          <Stack alignItems="center">
+            {loading.task ? (
+              <View style={{height: 100}}>
+                <Loading />
+              </View>
+            ) : todayTask.length === 0 ? (
+              <View style={{width: 200, height: 200}}>
+                <NoData />
+              </View>
+            ) : (
+              todayTask.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => navigation.push('LessonDetail', {item: item})}>
+                  <Margin top={10} key={item.id}>
+                    <TickBox
+                      style={{width: '100%'}}
+                      title={item.title?.S}
+                      header={item.title?.S}
+                      chapter={'Asdf'}
+                      userName={item?.author?.S}
+                    />
+                  </Margin>
+                </TouchableOpacity>
+              ))
+            )}
+          </Stack>
         </Padding>
       </View>
+      <ModalVisible
+        visible={modalVisible}
+        onClose={closeModal}
+        title={'Select'}
+        content={
+          <Stack direction="row" spacing={Spacing}>
+            <Button variant="contained" onPress={closeModal}>
+              Join Group
+            </Button>
+            <Button variant="outlined" onPress={() => console.log('create ')}>
+              Create Group
+            </Button>
+          </Stack>
+        }
+      />
     </ScrollView>
   );
 };

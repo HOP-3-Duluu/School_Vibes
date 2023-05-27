@@ -21,7 +21,6 @@ import Spacing from '../constants/Spacing';
 
 export const GroupDetail = ({navigation, color, route}) => {
   const {item, bgColor} = route?.params;
-  console.log(item);
   const timeData = [
     {start: 10, end: 12},
     {start: 15, end: 23},
@@ -71,7 +70,8 @@ export const GroupDetail = ({navigation, color, route}) => {
               <Font color={Colors.whiteText} fontSize={30} fontWeight="bold">
                 {item?.name}
               </Font>
-              <TouchableOpacity onPress={() => console.log('add')}>
+              <TouchableOpacity
+                onPress={() => navigation.push('Add', {groupName: item?.name})}>
                 <Plus fill={Colors.background} width={20} height={20} />
               </TouchableOpacity>
             </Stack>

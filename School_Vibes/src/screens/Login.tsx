@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -12,12 +12,30 @@ import Artwork03 from '../assets/images/ArtWork';
 import {Button, Font, Input, Margin} from '../components';
 import Colors from '../constants/Colors';
 import {Email, Password} from '../assets';
+import {Alert} from 'react-native';
+import {instance} from '../library';
+import {useAuth} from '../providers';
 
 export const Login = () => {
   const theme = useTheme();
+  const {setUser} = useAuth();
   const dimensions = useWindowDimensions();
   const navigation = useNavigation();
-
+  const [value, setValue] = useState({
+    gmail: '',
+    password: '',
+  });
+  const LoginRouter = async () => {
+    try {
+      if (!value.gmail || !value.password)
+        return Alert.alert('Та нэр болон нууц үгээ бөглөнө үү.');
+      const {data} = await instance.post('/login', value);
+      setUser(data.message[0]);
+      navigation.navigate('General');
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
       <SafeAreaView
@@ -46,6 +64,8 @@ export const Login = () => {
                   styles.input,
                   {backgroundColor: theme.colors.background},
                 ]}
+                value={value.gmail}
+                onChangeText={text => setValue({...value, gmail: text})}
               />
               <Email style={styles.inputIcon} />
             </View>
@@ -56,11 +76,13 @@ export const Login = () => {
                   styles.input,
                   {backgroundColor: theme.colors.background},
                 ]}
+                value={value.password}
+                onChangeText={text => setValue({...value, password: text})}
               />
               <Password style={styles.inputIcon} />
             </View>
             <Button
-              onPress={() => navigation.navigate('General')}
+              onPress={LoginRouter}
               variant="outlined"
               buttonStyle={styles.button}
               textStyle={styles.buttonText}>

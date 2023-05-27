@@ -6,14 +6,25 @@ import {Plus} from '../assets';
 import {Calendar, Font, Margin, Padding, Stack} from '../components';
 import Colors from '../constants/Colors';
 import Spacing from '../constants/Spacing';
+import {instance} from '../library';
 import {day, dayName, monthName, year} from '../library/Date';
 
 export const Task = () => {
   const navigation = useNavigation();
   const [selectedDay, setSelectedDay] = useState<any>(moment());
-
+  const [tasks, setTasks] = useState();
+  const fetchTaskData = async day => {
+    try {
+      const formattedDate = day.format('DD');
+      const {data} = await instance.get(`/taskDate/${formattedDate}`);
+      setTasks(data);
+    } catch (error) {
+      console.error('Error fetching task data:', error);
+    }
+  };
   const handleDayClick = day => {
     setSelectedDay(day);
+    fetchTaskData(day);
   };
 
   return (
@@ -72,7 +83,11 @@ export const Task = () => {
       </Padding>
       <Margin top={Spacing * 3}>
         <View>
-          <Calendar selectedDay={selectedDay} handleDayClick={handleDayClick} />
+          <Calendar
+            selectedDay={selectedDay}
+            handleDayClick={handleDayClick}
+            tasks={tasks}
+          />
         </View>
       </Margin>
     </SafeAreaView>
